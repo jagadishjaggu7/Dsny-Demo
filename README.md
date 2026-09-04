@@ -1,6 +1,6 @@
 # DSNY ChangeHub
 
-Enterprise Change Management Portal for Disney & Capgemini.
+Enterprise Change Management Portal for dsny & cg.
 
 ## Vision
 A ServiceNow-style portal to manage report, dashboard and pipeline change requests with role-based access.
