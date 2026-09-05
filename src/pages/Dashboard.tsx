@@ -89,7 +89,7 @@ export default function Dashboard() {
               Administration
             </Typography>
           </Stack>
-          <Typography component="h1" sx={{ fontSize: { xs: "1.95rem", md: "2.65rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.2 }}>
+          <Typography component="h1" sx={{ fontSize: { xs: "1.82rem", md: "2.35rem" }, lineHeight: 1.02, fontWeight: 900, letterSpacing: -1.05 }}>
             Change Request Overview
           </Typography>
         </Box>
