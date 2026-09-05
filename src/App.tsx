@@ -12,7 +12,12 @@ import { currentDeveloperId } from "./data/developers";
 import type { Ticket } from "./types/ticket";
 import type { AppPage, AppRole } from "./components/Sidebar";
 
-const defaultPageByRole: Record<AppRole, AppPage> = { admin: "dashboard", developer: "my-queue", requester: "my-requests" };
+const defaultPageByRole: Record<AppRole, AppPage> = {
+  admin: "dashboard",
+  developer: "my-queue",
+  requester: "my-requests",
+  viewer: "dashboard",
+};
 
 export default function App() {
   const [role, setRole] = useState<AppRole>("admin");
@@ -32,8 +37,8 @@ export default function App() {
           <TicketDetail ticket={selectedTicket} role={role} onBack={() => setSelectedTicketId(null)} onUpdate={handleTicketUpdate} />
         ) : (
           <>
-            {activePage === "dashboard" && role === "admin" && <Dashboard tickets={tickets} onTicketClick={(ticket) => setSelectedTicketId(ticket.id)} />}
-            {activePage === "all-requests" && role === "admin" && <AllRequests tickets={tickets} onTicketClick={(ticket) => setSelectedTicketId(ticket.id)} />}
+            {activePage === "dashboard" && (role === "admin" || role === "viewer") && <Dashboard tickets={tickets} onTicketClick={(ticket) => setSelectedTicketId(ticket.id)} />}
+            {activePage === "all-requests" && (role === "admin" || role === "viewer") && <AllRequests tickets={tickets} onTicketClick={(ticket) => setSelectedTicketId(ticket.id)} />}
             {activePage === "my-requests" && role === "requester" && <MyRequests tickets={tickets} onTicketClick={(ticket) => setSelectedTicketId(ticket.id)} />}
             {activePage === "new-request" && role === "requester" && <NewRequest onCancel={() => setActivePage("my-requests")} />}
             {activePage === "my-queue" && role === "developer" && <DeveloperQueue tickets={tickets} developerId={currentDeveloperId} onTicketClick={(ticket) => setSelectedTicketId(ticket.id)} />}
