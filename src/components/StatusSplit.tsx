@@ -1,4 +1,4 @@
-import { Box, LinearProgress, Stack, Typography } from "@mui/material";
+import { Box, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import type { TicketStatus } from "../types/ticket";
 
 interface StatusSplitProps {
@@ -21,32 +21,31 @@ export default function StatusSplit({ data }: StatusSplitProps) {
 
   return (
     <Box>
-      <Stack direction="row" justifyContent="space-between" alignItems="baseline" mb={2}>
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" mb={2.25}>
         <Box>
           <Typography variant="h6" fontWeight={800}>
-            Status Split
+            Status distribution
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Current workflow distribution
+          <Typography variant="body2" color="text.secondary" mt={0.25}>
+            Current requests by workflow stage
           </Typography>
         </Box>
-        <Typography variant="body2" fontWeight={700} color="text.secondary">
-          {total} active
-        </Typography>
+        <Chip label={`${total} total`} size="small" variant="outlined" sx={{ fontWeight: 700 }} />
       </Stack>
 
-      <Stack spacing={1.6}>
+      <Stack spacing={1.45}>
         {statuses.map((status) => {
           const count = data[status];
           const percent = total ? (count / total) * 100 : 0;
 
           return (
             <Box key={status}>
-              <Stack direction="row" justifyContent="space-between" mb={0.6}>
-                <Typography variant="body2" fontWeight={700}>
-                  {status}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
+              <Stack direction="row" justifyContent="space-between" alignItems="baseline" mb={0.6}>
+                <Stack direction="row" spacing={0.75} alignItems="center">
+                  <Box sx={{ width: 7, height: 7, borderRadius: "50%", bgcolor: barColor[status] }} />
+                  <Typography variant="body2" fontWeight={700}>{status}</Typography>
+                </Stack>
+                <Typography variant="caption" color="text.secondary" fontWeight={700}>
                   {count} · {Math.round(percent)}%
                 </Typography>
               </Stack>
@@ -54,9 +53,9 @@ export default function StatusSplit({ data }: StatusSplitProps) {
                 variant="determinate"
                 value={percent}
                 sx={{
-                  height: 7,
+                  height: 8,
                   borderRadius: 999,
-                  bgcolor: "rgba(148,163,184,0.12)",
+                  bgcolor: "rgba(148,163,184,0.10)",
                   "& .MuiLinearProgress-bar": {
                     borderRadius: 999,
                     backgroundColor: barColor[status],
