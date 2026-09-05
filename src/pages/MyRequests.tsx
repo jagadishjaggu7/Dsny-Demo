@@ -1,13 +1,18 @@
-import { Box, Chip, Divider, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Paper, Stack, Typography } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import ScheduleOutlinedIcon from "@mui/icons-material/ScheduleOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { tickets } from "../data/tickets";
 import StatusChip from "../components/StatusChip";
 
 const requesterEmail = "disney.user@disney.com";
 
-export default function MyRequests() {
+interface MyRequestsProps {
+  onNewRequest: () => void;
+}
+
+export default function MyRequests({ onNewRequest }: MyRequestsProps) {
   const myRequests = tickets.filter((ticket) => ticket.requester === requesterEmail);
   const closedCount = myRequests.filter((ticket) => ticket.status === "Closed").length;
   const openCount = myRequests.length - closedCount;
@@ -38,10 +43,13 @@ export default function MyRequests() {
               </Typography>
             </Box>
           </Stack>
-          <Typography color="text.secondary" sx={{ maxWidth: 420, textAlign: { xs: "left", md: "right" } }}>
-            Track requests you raised, see where they are in the delivery process, and review the latest ETA.
-          </Typography>
+          <Button variant="contained" startIcon={<AddOutlinedIcon />} onClick={onNewRequest} sx={{ borderRadius: 2, whiteSpace: "nowrap" }}>
+            New Request
+          </Button>
         </Stack>
+        <Typography color="text.secondary" mt={1.2} sx={{ maxWidth: 720 }}>
+          Track requests you raised, see where they are in the delivery process, and review the latest ETA.
+        </Typography>
       </Box>
 
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mb: 2.25 }}>
