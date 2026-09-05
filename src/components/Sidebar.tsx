@@ -13,14 +13,26 @@ import AssignmentRounded from "@mui/icons-material/AssignmentRounded";
 import ListAltRounded from "@mui/icons-material/ListAltRounded";
 import AddCircleOutlineRounded from "@mui/icons-material/AddCircleOutlineRounded";
 
-export type AppPage = "dashboard" | "new-request";
+export type AppRole = "admin" | "requester";
+export type AppPage = "dashboard" | "my-requests" | "all-requests" | "new-request";
 
 interface SidebarProps {
+  role: AppRole;
   activePage: AppPage;
   onNavigate: (page: AppPage) => void;
 }
 
-export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
+export default function Sidebar({ role, activePage, onNavigate }: SidebarProps) {
+  const items = role === "admin"
+    ? [
+        { page: "dashboard" as const, label: "Dashboard", icon: <DashboardRounded /> },
+        { page: "all-requests" as const, label: "All Requests", icon: <ListAltRounded /> },
+      ]
+    : [
+        { page: "my-requests" as const, label: "My Requests", icon: <AssignmentRounded /> },
+        { page: "new-request" as const, label: "New Request", icon: <AddCircleOutlineRounded /> },
+      ];
+
   return (
     <Box
       sx={{
@@ -37,38 +49,32 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.45 }}>
           Change & Data Request Management
         </Typography>
+        <Typography
+          variant="caption"
+          sx={{ mt: 1.15, display: "inline-block", color: "primary.main", fontWeight: 800, textTransform: "uppercase", letterSpacing: 1 }}
+        >
+          {role === "admin" ? "Admin" : "Requester"}
+        </Typography>
       </Box>
 
       <Divider />
 
       <List sx={{ px: 1, py: 2 }}>
-        <ListItemButton
-          selected={activePage === "dashboard"}
-          onClick={() => onNavigate("dashboard")}
-          sx={{ borderRadius: 2, mb: 1 }}
-        >
-          <ListItemIcon><DashboardRounded color="primary" /></ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItemButton>
-
-        <ListItemButton disabled sx={{ borderRadius: 2, mb: 1 }}>
-          <ListItemIcon><AssignmentRounded /></ListItemIcon>
-          <ListItemText primary="My Requests" secondary="Coming soon" />
-        </ListItemButton>
-
-        <ListItemButton disabled sx={{ borderRadius: 2, mb: 1 }}>
-          <ListItemIcon><ListAltRounded /></ListItemIcon>
-          <ListItemText primary="All Requests" secondary="Coming soon" />
-        </ListItemButton>
-
-        <ListItemButton
-          selected={activePage === "new-request"}
-          onClick={() => onNavigate("new-request")}
-          sx={{ borderRadius: 2 }}
-        >
-          <ListItemIcon><AddCircleOutlineRounded color={activePage === "new-request" ? "primary" : undefined} /></ListItemIcon>
-          <ListItemText primary="New Request" />
-        </ListItemButton>
+        {items.map((item, index) => (
+          <ListItemButton
+            key={item.page}
+            selected={activePage === item.page}
+            onClick={() => onNavigate(item.page)}
+            sx={{ borderRadius: 2, mb: index === items.length - 1 ? 0 : 1 }}
+          >
+            <ListItemIcon>
+              {item.page === activePage ? (
+                <Box sx={{ color: "primary.main", display: "flex" }}>{item.icon}</Box>
+              ) : item.icon}
+            </ListItemIcon>
+            <ListItemText primary={item.label} />
+          </ListItemButton>
+        ))}
       </List>
     </Box>
   );
