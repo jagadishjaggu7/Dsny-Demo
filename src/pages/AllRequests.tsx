@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import RecentTable from "../components/RecentTable";
+import { tickets } from "../data/tickets";
 
 export default function AllRequests() {
   return (
@@ -11,7 +12,11 @@ export default function AllRequests() {
           <Box component="p" sx={{ m: 0, mt: 0.8, color: "text.secondary" }}>Review all change and reporting/data requests across DSNY operations.</Box>
         </Box>
       </Box>
-      <RecentTable />
+      <RecentTable
+        tickets={tickets}
+        title="All Requests"
+        subtitle="Search all change requests and reporting/data issues across PTP, RTR, and DFS."
+      />
     </Box>
   );
 }
