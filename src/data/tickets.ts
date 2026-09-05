@@ -3,6 +3,7 @@ import type { Ticket } from "../types/ticket";
 export const tickets: Ticket[] = [
   {
     id: "CR-2026-0142",
+    requestType: "Change Request",
     title: "Vendor Payment KPI Enhancement",
     tower: "RTR",
     priority: "High",
@@ -12,15 +13,19 @@ export const tickets: Ticket[] = [
   },
   {
     id: "CR-2026-0141",
+    requestType: "Reporting / Data Issue",
     title: "Invoice Dashboard Data Correction",
     tower: "PTP",
     priority: "Medium",
     status: "QA",
     requester: "cap.user@capgemini.com",
     eta: "10 Sep 2026",
+    reportName: "Invoice Dashboard",
+    reportingMonth: "Aug 2026",
   },
   {
     id: "CR-2026-0140",
+    requestType: "Change Request",
     title: "Weekly Cash Flow Report Update",
     tower: "DFS",
     priority: "Critical",
@@ -30,6 +35,7 @@ export const tickets: Ticket[] = [
   },
   {
     id: "CR-2026-0139",
+    requestType: "Change Request",
     title: "Supplier Ageing Logic Change",
     tower: "PTP",
     priority: "Low",
@@ -39,6 +45,7 @@ export const tickets: Ticket[] = [
   },
   {
     id: "CR-2026-0138",
+    requestType: "Change Request",
     title: "RTR Month-End Reconciliation Rules",
     tower: "RTR",
     priority: "High",
@@ -48,6 +55,7 @@ export const tickets: Ticket[] = [
   },
   {
     id: "CR-2026-0137",
+    requestType: "Change Request",
     title: "AP Invoice Aging Filter",
     tower: "PTP",
     priority: "Medium",
@@ -57,15 +65,19 @@ export const tickets: Ticket[] = [
   },
   {
     id: "CR-2026-0136",
+    requestType: "Reporting / Data Issue",
     title: "Finance Data Quality Exception View",
     tower: "DFS",
     priority: "High",
     status: "QA",
     requester: "disney.finance@disney.com",
     eta: "11 Sep 2026",
+    reportName: "Finance Data Quality",
+    reportingMonth: "Aug 2026",
   },
   {
     id: "CR-2026-0135",
+    requestType: "Change Request",
     title: "Supplier Master Validation Update",
     tower: "PTP",
     priority: "Low",
@@ -75,15 +87,19 @@ export const tickets: Ticket[] = [
   },
   {
     id: "CR-2026-0134",
+    requestType: "Reporting / Data Issue",
     title: "Cash Forecast Variance Thresholds",
     tower: "DFS",
     priority: "Medium",
     status: "Assigned",
     requester: "disney.finance@disney.com",
     eta: "16 Sep 2026",
+    reportName: "Cash Forecast",
+    reportingMonth: "Aug 2026",
   },
   {
     id: "CR-2026-0133",
+    requestType: "Change Request",
     title: "Closed Period Reporting Enhancement",
     tower: "RTR",
     priority: "High",
