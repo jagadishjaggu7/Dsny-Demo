@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Box, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Toolbar, Typography } from "@mui/material";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 
 export default function TopBar() {
@@ -13,8 +13,8 @@ export default function TopBar() {
         backdropFilter: "blur(14px)",
       }}
     >
-      <Toolbar sx={{ minHeight: "72px !important", px: { xs: 2, md: 3 } }}>
-        <Stack direction="row" spacing={1.25} alignItems="center">
+      <Toolbar sx={{ minHeight: "68px !important", px: { xs: 2, md: 3 } }}>
+        <Box display="flex" alignItems="center" gap={1.25}>
           <Box
             sx={{
               width: 36,
@@ -29,15 +29,10 @@ export default function TopBar() {
           >
             <DashboardOutlinedIcon sx={{ fontSize: 19 }} />
           </Box>
-          <Box>
-            <Typography sx={{ fontSize: "1rem", lineHeight: 1.1, fontWeight: 800, letterSpacing: -0.2 }}>
-              DSNY ChangeHub
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              Admin workspace
-            </Typography>
-          </Box>
-        </Stack>
+          <Typography sx={{ fontSize: "1rem", lineHeight: 1.1, fontWeight: 800, letterSpacing: -0.2 }}>
+            DSNY ChangeHub
+          </Typography>
+        </Box>
 
         <Box sx={{ flexGrow: 1 }} />
 
