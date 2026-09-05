@@ -15,11 +15,21 @@ import {
   Typography,
 } from "@mui/material";
 
-import { tickets } from "../data/tickets";
+import type { Ticket } from "../types/ticket";
 import PriorityBadge from "./PriorityBadge";
 import StatusChip from "./StatusChip";
 
-export default function RecentTable() {
+interface RecentTableProps {
+  tickets: Ticket[];
+  title?: string;
+  subtitle?: string;
+}
+
+export default function RecentTable({
+  tickets,
+  title = "Recent Requests",
+  subtitle = "Latest change requests and reporting/data issues across PTP, RTR, and DFS.",
+}: RecentTableProps) {
   const [query, setQuery] = useState("");
 
   const filteredTickets = useMemo(() => {
@@ -33,7 +43,7 @@ export default function RecentTable() {
         ),
       )
       .slice(0, 10);
-  }, [query]);
+  }, [query, tickets]);
 
   return (
     <Paper
@@ -60,12 +70,8 @@ export default function RecentTable() {
         }}
       >
         <Box>
-          <Typography variant="h6" fontWeight={800}>
-            Recent Requests
-          </Typography>
-          <Typography variant="body2" color="text.secondary" mt={0.4}>
-            Latest change requests and reporting/data issues across PTP, RTR, and DFS.
-          </Typography>
+          <Typography variant="h6" fontWeight={800}>{title}</Typography>
+          <Typography variant="body2" color="text.secondary" mt={0.4}>{subtitle}</Typography>
         </Box>
 
         <TextField
@@ -76,16 +82,11 @@ export default function RecentTable() {
           aria-label="Search requests"
           sx={{
             width: { xs: "100%", sm: 350 },
-            "& .MuiOutlinedInput-root": {
-              borderRadius: 2,
-              bgcolor: "rgba(15,23,42,0.7)",
-            },
+            "& .MuiOutlinedInput-root": { borderRadius: 2, bgcolor: "rgba(15,23,42,0.7)" },
           }}
           InputProps={{
             startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon fontSize="small" />
-              </InputAdornment>
+              <InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>
             ),
           }}
         />
@@ -96,15 +97,7 @@ export default function RecentTable() {
           <TableHead>
             <TableRow>
               {["CR Number", "Type", "Title", "Tower", "Priority", "Status", "Requester", "ETA"].map((label) => (
-                <TableCell
-                  key={label}
-                  sx={{
-                    fontWeight: 800,
-                    bgcolor: "#162033",
-                    borderBottomColor: "rgba(148,163,184,0.14)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <TableCell key={label} sx={{ fontWeight: 800, bgcolor: "#162033", borderBottomColor: "rgba(148,163,184,0.14)", whiteSpace: "nowrap" }}>
                   {label}
                 </TableCell>
               ))}
