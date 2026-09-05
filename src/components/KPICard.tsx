@@ -16,32 +16,26 @@ const accentMap = {
   info: "#38BDF8",
 };
 
-export default function KPICard({
-  title,
-  value,
-  subtitle,
-  icon,
-  accent = "primary",
-}: KPICardProps) {
+export default function KPICard({ title, value, subtitle, icon, accent = "primary" }: KPICardProps) {
   const accentColor = accentMap[accent];
 
   return (
     <Card
       elevation={0}
       sx={{
+        minHeight: 112,
         height: "100%",
-        minHeight: 118,
-        borderRadius: 3,
-        border: "1px solid rgba(148,163,184,0.14)",
-        background: "linear-gradient(145deg, rgba(24,34,53,0.98), rgba(15,23,42,0.98))",
-        boxShadow: "0 10px 24px rgba(2,6,23,0.16)",
+        borderRadius: 2.75,
+        border: "1px solid rgba(148,163,184,0.12)",
+        background: "linear-gradient(145deg, rgba(24,34,53,0.96), rgba(15,23,42,0.98))",
+        boxShadow: "0 8px 22px rgba(2,6,23,0.15)",
         position: "relative",
         overflow: "hidden",
-        transition: "transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease",
+        transition: "transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease",
         "&:hover": {
           transform: "translateY(-2px)",
-          boxShadow: "0 16px 30px rgba(2,6,23,0.24)",
-          borderColor: `${accentColor}44`,
+          boxShadow: "0 14px 28px rgba(2,6,23,0.22)",
+          borderColor: `${accentColor}40`,
         },
         "&::before": {
           content: '""',
@@ -52,34 +46,22 @@ export default function KPICard({
         },
       }}
     >
-      <CardContent sx={{ p: 2.25, "&:last-child": { pb: 2.25 } }}>
+      <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1.5}>
           <Box minWidth={0}>
-            <Typography variant="caption" color="text.secondary" fontWeight={700} textTransform="uppercase" letterSpacing={0.55}>
+            <Typography variant="caption" color="text.secondary" fontWeight={750} letterSpacing={0.5}>
               {title}
             </Typography>
-            <Typography variant="h4" fontWeight={850} mt={0.45} letterSpacing={-0.8} lineHeight={1.05}>
+            <Typography sx={{ mt: 0.25, fontSize: "2rem", lineHeight: 1, fontWeight: 850, letterSpacing: -0.8 }}>
               {value}
             </Typography>
             {subtitle && (
-              <Typography variant="caption" color="text.secondary" mt={0.65} display="block" noWrap>
+              <Typography variant="caption" color="text.secondary" mt={0.7} display="block" noWrap>
                 {subtitle}
               </Typography>
             )}
           </Box>
-          <Box
-            sx={{
-              width: 42,
-              height: 42,
-              flexShrink: 0,
-              borderRadius: 2.25,
-              display: "grid",
-              placeItems: "center",
-              color: accentColor,
-              bgcolor: `${accentColor}14`,
-              border: `1px solid ${accentColor}2a`,
-            }}
-          >
+          <Box sx={{ width: 40, height: 40, flexShrink: 0, borderRadius: 2, display: "grid", placeItems: "center", color: accentColor, bgcolor: `${accentColor}12`, border: `1px solid ${accentColor}28` }}>
             {icon}
           </Box>
         </Stack>
