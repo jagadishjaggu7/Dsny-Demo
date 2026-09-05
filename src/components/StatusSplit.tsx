@@ -34,10 +34,10 @@ export default function StatusSplit({ data }: StatusSplitProps) {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "220px 280px" },
-          justifyContent: { xs: "stretch", md: "start" },
-          gap: { xs: 1.5, md: 2.25 },
+          gridTemplateColumns: { xs: "1fr", md: "220px 215px" },
+          columnGap: { xs: 1.5, md: 1.75 },
           alignItems: "center",
+          justifyContent: "start",
         }}
       >
         <Box sx={{ height: 218, position: "relative", minWidth: 0 }}>
@@ -82,38 +82,30 @@ export default function StatusSplit({ data }: StatusSplitProps) {
               pointerEvents: "none",
             }}
           >
-            <Typography sx={{ fontSize: "1.8rem", fontWeight: 850, lineHeight: 1 }}>
-              {open}
-            </Typography>
+            <Typography sx={{ fontSize: "1.8rem", fontWeight: 850, lineHeight: 1 }}>{open}</Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mt: 0.4 }}>
               open requests
             </Typography>
           </Box>
         </Box>
 
-        <Box sx={{ minWidth: 0, width: "280px", maxWidth: "100%" }}>
+        <Box sx={{ width: "215px", maxWidth: "100%" }}>
           <Box
             sx={{
               display: "grid",
               gridTemplateColumns: "minmax(0, 1fr) 28px 46px",
-              columnGap: 1,
+              columnGap: 0.75,
               alignItems: "center",
-              px: 0.75,
+              px: 0.5,
               mb: 0.35,
             }}
           >
-            <Typography variant="caption" color="text.secondary" fontWeight={800}>
-              STATUS
-            </Typography>
-            <Typography variant="caption" color="text.secondary" fontWeight={800} textAlign="right">
-              #
-            </Typography>
-            <Typography variant="caption" color="text.secondary" fontWeight={800} textAlign="right">
-              SHARE
-            </Typography>
+            <Typography variant="caption" color="text.secondary" fontWeight={800}>STATUS</Typography>
+            <Typography variant="caption" color="text.secondary" fontWeight={800} textAlign="right">#</Typography>
+            <Typography variant="caption" color="text.secondary" fontWeight={800} textAlign="right">SHARE</Typography>
           </Box>
 
-          <Stack spacing={0.25}>
+          <Stack spacing={0.2}>
             {statuses.map((status) => {
               const count = data[status];
               const percent = total ? Math.round((count / total) * 100) : 0;
@@ -124,34 +116,20 @@ export default function StatusSplit({ data }: StatusSplitProps) {
                   sx={{
                     display: "grid",
                     gridTemplateColumns: "minmax(0, 1fr) 28px 46px",
-                    columnGap: 1,
+                    columnGap: 0.75,
                     alignItems: "center",
                     minHeight: 32,
-                    px: 0.75,
+                    px: 0.5,
                     borderRadius: 1.5,
                     "&:hover": { bgcolor: "rgba(255,255,255,0.035)" },
                   }}
                 >
-                  <Stack direction="row" spacing={1} alignItems="center" minWidth={0}>
-                    <Box
-                      sx={{
-                        width: 8,
-                        height: 8,
-                        borderRadius: "50%",
-                        bgcolor: colors[status],
-                        flexShrink: 0,
-                      }}
-                    />
-                    <Typography variant="body2" fontWeight={700} noWrap>
-                      {status}
-                    </Typography>
+                  <Stack direction="row" spacing={0.8} alignItems="center" minWidth={0}>
+                    <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: colors[status], flexShrink: 0 }} />
+                    <Typography variant="body2" fontWeight={700} noWrap>{status}</Typography>
                   </Stack>
-                  <Typography variant="body2" fontWeight={800} textAlign="right">
-                    {count}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" fontWeight={700} textAlign="right">
-                    {percent}%
-                  </Typography>
+                  <Typography variant="body2" fontWeight={800} textAlign="right">{count}</Typography>
+                  <Typography variant="body2" color="text.secondary" fontWeight={700} textAlign="right">{percent}%</Typography>
                 </Box>
               );
             })}
