@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import {
   Alert,
   Box,
@@ -31,7 +32,7 @@ const requestOptions: Array<{
   type: RequestType;
   title: string;
   description: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }> = [
   {
     type: "Change Request",
