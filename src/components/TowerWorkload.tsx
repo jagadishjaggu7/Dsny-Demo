@@ -17,40 +17,51 @@ export default function TowerWorkload({ data }: TowerWorkloadProps) {
 
   return (
     <Box>
-      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" mb={2}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.75}>
         <Box>
           <Typography variant="h6" fontWeight={800}>Tower workload</Typography>
           <Typography variant="body2" color="text.secondary" mt={0.3}>
-            Current request distribution
+            Request volume across business towers
           </Typography>
         </Box>
         <Typography variant="caption" color="text.secondary" fontWeight={800}>
-          {total} total
+          {total} requests
         </Typography>
       </Stack>
 
-      <Stack spacing={2.25}>
+      <Stack spacing={1.9}>
         {entries.map(([tower, count]) => {
           const meta = towerMeta[tower] ?? { label: tower, color: "#4F8CFF" };
           const percentage = total ? Math.round((count / total) * 100) : 0;
 
           return (
             <Box key={tower}>
-              <Stack direction="row" alignItems="center" justifyContent="space-between" mb={0.7}>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: meta.color }} />
-                  <Box>
-                    <Typography variant="body2" fontWeight={800}>{tower}</Typography>
-                    <Typography variant="caption" color="text.secondary">{meta.label}</Typography>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "minmax(0, 1fr) auto",
+                  columnGap: 2,
+                  alignItems: "center",
+                  mb: 0.75,
+                }}
+              >
+                <Stack direction="row" spacing={1} alignItems="center" minWidth={0}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: meta.color, flexShrink: 0 }} />
+                  <Box minWidth={0}>
+                    <Typography variant="body2" fontWeight={800} noWrap>{tower}</Typography>
+                    <Typography variant="caption" color="text.secondary" noWrap>{meta.label}</Typography>
                   </Box>
                 </Stack>
-                <Typography variant="body2" fontWeight={800}>{count}</Typography>
-              </Stack>
+                <Typography variant="body2" fontWeight={800} sx={{ whiteSpace: "nowrap" }}>
+                  {count} · {percentage}%
+                </Typography>
+              </Box>
+
               <LinearProgress
                 variant="determinate"
                 value={(count / max) * 100}
                 sx={{
-                  height: 9,
+                  height: 8,
                   borderRadius: 999,
                   bgcolor: "rgba(148,163,184,0.10)",
                   "& .MuiLinearProgress-bar": {
@@ -59,9 +70,6 @@ export default function TowerWorkload({ data }: TowerWorkloadProps) {
                   },
                 }}
               />
-              <Typography variant="caption" color="text.secondary" display="block" mt={0.45}>
-                {percentage}% of all current requests
-              </Typography>
             </Box>
           );
         })}
