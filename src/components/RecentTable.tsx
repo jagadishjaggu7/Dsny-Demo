@@ -23,12 +23,14 @@ interface RecentTableProps {
   tickets: Ticket[];
   title?: string;
   subtitle?: string;
+  onTicketClick?: (ticket: Ticket) => void;
 }
 
 export default function RecentTable({
   tickets,
   title = "Recent Requests",
   subtitle = "Latest change requests and reporting/data issues across PTP, RTR, and DFS.",
+  onTicketClick,
 }: RecentTableProps) {
   const [query, setQuery] = useState("");
 
@@ -105,7 +107,12 @@ export default function RecentTable({
           </TableHead>
           <TableBody>
             {filteredTickets.map((ticket) => (
-              <TableRow key={ticket.id} hover>
+              <TableRow
+                key={ticket.id}
+                hover
+                onClick={() => onTicketClick?.(ticket)}
+                sx={{ cursor: onTicketClick ? "pointer" : "default" }}
+              >
                 <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>{ticket.id}</TableCell>
                 <TableCell sx={{ minWidth: 150 }}>
                   <Chip
