@@ -14,10 +14,13 @@ export interface Ticket {
   id: string;
   requestType: RequestType;
   title: string;
+  description?: string;
   tower: "PTP" | "RTR" | "DFS";
   priority: TicketPriority;
   status: TicketStatus;
   requester: string;
+  assignedDeveloperId?: string;
+  assignedDeveloperName?: string;
   eta?: string;
   reportName?: string;
   reportingMonth?: string;
