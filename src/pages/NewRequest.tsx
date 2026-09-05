@@ -174,7 +174,13 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
                 <MenuItem value="Critical">Critical</MenuItem>
               </Select>
             </FormControl>
-            <TextField fullWidth label="Requester Email" required defaultValue="disney.user@disney.com" />
+            <TextField
+              fullWidth
+              label="Requester Email"
+              defaultValue="disney.user@disney.com"
+              disabled
+              helperText="In the company version, this will come from the signed-in OAuth account."
+            />
           </Stack>
 
           <Divider />
