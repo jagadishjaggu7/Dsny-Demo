@@ -33,7 +33,9 @@ export default function App() {
       <Box sx={{ maxWidth: 1600, mx: "auto" }}>
         {activePage === "dashboard" && role === "admin" && <Dashboard />}
         {activePage === "all-requests" && role === "admin" && <AllRequests />}
-        {activePage === "my-requests" && role === "requester" && <MyRequests />}
+        {activePage === "my-requests" && role === "requester" && (
+          <MyRequests onNewRequest={() => setActivePage("new-request")} />
+        )}
         {activePage === "new-request" && role === "requester" && (
           <NewRequest onCancel={() => setActivePage("my-requests")} />
         )}
