@@ -31,11 +31,11 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       }}
     >
       <Box sx={{ p: 3 }}>
-        <Typography variant="h5" fontWeight="bold">
-          DSNY
+        <Typography variant="h5" fontWeight="bold" sx={{ letterSpacing: -0.4 }}>
+          DSNY RequestHub
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          ChangeHub
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.45 }}>
+          Change & Data Request Management
         </Typography>
       </Box>
 
