@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Box, Chip, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
@@ -19,9 +19,9 @@ const panelSx = {
   height: "100%",
   p: { xs: 2, md: 2.5 },
   borderRadius: 3,
-  border: "1px solid rgba(148,163,184,0.10)",
-  bgcolor: "rgba(15,23,42,0.66)",
-  boxShadow: "0 18px 42px rgba(2,6,23,0.16)",
+  border: "1px solid rgba(148,163,184,0.12)",
+  bgcolor: "#111827",
+  boxShadow: "0 10px 28px rgba(2,6,23,0.14)",
 };
 
 export default function Dashboard() {
@@ -49,43 +49,29 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <Box sx={{ pb: 4 }}>
+    <Box sx={{ maxWidth: 1520, mx: "auto", px: { xs: 0, lg: 1 }, pb: 4 }}>
       <Stack
         direction={{ xs: "column", md: "row" }}
-        alignItems={{ xs: "flex-start", md: "flex-end" }}
+        alignItems={{ xs: "flex-start", md: "center" }}
         justifyContent="space-between"
         gap={2}
         mb={2.5}
       >
         <Box>
-          <Typography
-            sx={{
-              fontSize: { xs: "2rem", md: "2.45rem" },
-              lineHeight: 1,
-              fontWeight: 850,
-              letterSpacing: -1.2,
-            }}
-          >
+          <Typography sx={{ fontSize: { xs: "2rem", md: "2.35rem" }, lineHeight: 1.05, fontWeight: 800, letterSpacing: -1 }}>
             Admin overview
           </Typography>
-          <Typography color="text.secondary" mt={0.8}>
+          <Typography color="text.secondary" mt={0.6}>
             Operational view of DSNY change requests and delivery workload.
           </Typography>
         </Box>
-        <Chip
-          icon={<AccessTimeOutlinedIcon sx={{ fontSize: "16px !important" }} />}
-          label="Live dashboard"
-          size="small"
-          variant="outlined"
-          sx={{
-            fontWeight: 800,
-            borderColor: "rgba(79,140,255,0.30)",
-            bgcolor: "rgba(79,140,255,0.06)",
-          }}
-        />
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ px: 1.25, py: 0.65, border: "1px solid rgba(79,140,255,0.22)", borderRadius: 999, bgcolor: "rgba(79,140,255,0.06)" }}>
+          <AccessTimeOutlinedIcon sx={{ fontSize: 16, color: "#4F8CFF" }} />
+          <Typography variant="caption" fontWeight={800}>Live dashboard</Typography>
+        </Stack>
       </Stack>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={1.75}>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
           <KPICard title="Total Requests" value={String(tickets.length)} subtitle="Current request feed" icon={<AssignmentOutlinedIcon fontSize="small" />} accent="primary" />
         </Grid>
@@ -100,47 +86,35 @@ export default function Dashboard() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={0.5}>
+      <Grid container spacing={1.75} mt={0.75}>
         <Grid size={{ xs: 12, lg: 7 }}>
-          <Paper elevation={0} sx={panelSx}>
-            <StatusSplit data={analytics.statusCounts} />
-          </Paper>
+          <Box sx={panelSx}><StatusSplit data={analytics.statusCounts} /></Box>
         </Grid>
         <Grid size={{ xs: 12, lg: 5 }}>
-          <Paper elevation={0} sx={panelSx}>
-            <TowerWorkload data={analytics.towerCounts} />
-          </Paper>
+          <Box sx={panelSx}><TowerWorkload data={analytics.towerCounts} /></Box>
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={0.5}>
+      <Grid container spacing={1.75} mt={0.75}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper elevation={0} sx={{ ...panelSx, minHeight: 106 }}>
-            <Typography variant="caption" color="text.secondary" fontWeight={800} letterSpacing={0.7}>
-              ACTIVE WORKLOAD
-            </Typography>
-            <Stack direction="row" alignItems="baseline" spacing={1.2} mt={0.35}>
-              <Typography sx={{ fontSize: "1.8rem", lineHeight: 1, fontWeight: 850 }}>{analytics.active}</Typography>
+          <Box sx={{ ...panelSx, minHeight: 96 }}>
+            <Typography variant="caption" color="text.secondary" fontWeight={800} letterSpacing={0.6}>ACTIVE WORKLOAD</Typography>
+            <Stack direction="row" alignItems="baseline" spacing={1} mt={0.35}>
+              <Typography sx={{ fontSize: "1.75rem", lineHeight: 1, fontWeight: 850 }}>{analytics.active}</Typography>
               <Typography variant="body2" color="text.secondary">open requests</Typography>
             </Stack>
-            <Typography variant="body2" color="text.secondary" mt={0.5}>
-              Requests still moving through the workflow.
-            </Typography>
-          </Paper>
+            <Typography variant="body2" color="text.secondary" mt={0.35}>Requests still moving through the workflow.</Typography>
+          </Box>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Paper elevation={0} sx={{ ...panelSx, minHeight: 106 }}>
-            <Typography variant="caption" color="text.secondary" fontWeight={800} letterSpacing={0.7}>
-              PRIORITY EXPOSURE
-            </Typography>
-            <Stack direction="row" alignItems="baseline" spacing={1.2} mt={0.35}>
-              <Typography sx={{ fontSize: "1.8rem", lineHeight: 1, fontWeight: 850 }}>{analytics.highPriority}</Typography>
+          <Box sx={{ ...panelSx, minHeight: 96 }}>
+            <Typography variant="caption" color="text.secondary" fontWeight={800} letterSpacing={0.6}>PRIORITY EXPOSURE</Typography>
+            <Stack direction="row" alignItems="baseline" spacing={1} mt={0.35}>
+              <Typography sx={{ fontSize: "1.75rem", lineHeight: 1, fontWeight: 850 }}>{analytics.highPriority}</Typography>
               <Typography variant="body2" color="text.secondary">high / critical</Typography>
             </Stack>
-            <Typography variant="body2" color="text.secondary" mt={0.5}>
-              Requests needing closer delivery attention.
-            </Typography>
-          </Paper>
+            <Typography variant="body2" color="text.secondary" mt={0.35}>Requests needing closer delivery attention.</Typography>
+          </Box>
         </Grid>
       </Grid>
 
