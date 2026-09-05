@@ -17,47 +17,50 @@ export default function TowerWorkload({ data }: TowerWorkloadProps) {
 
   return (
     <Box>
-      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" mb={2.25}>
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" mb={2}>
         <Box>
           <Typography variant="h6" fontWeight={800}>Tower workload</Typography>
-          <Typography variant="body2" color="text.secondary" mt={0.25}>
-            Distribution across supported towers
+          <Typography variant="body2" color="text.secondary" mt={0.3}>
+            Current request distribution
           </Typography>
         </Box>
-        <Typography variant="caption" color="text.secondary" fontWeight={700}>
-          {total} requests
+        <Typography variant="caption" color="text.secondary" fontWeight={800}>
+          {total} total
         </Typography>
       </Stack>
 
-      <Stack spacing={2.1}>
+      <Stack spacing={2.25}>
         {entries.map(([tower, count]) => {
           const meta = towerMeta[tower] ?? { label: tower, color: "#4F8CFF" };
           const percentage = total ? Math.round((count / total) * 100) : 0;
 
           return (
             <Box key={tower}>
-              <Stack direction="row" alignItems="center" justifyContent="space-between" mb={0.65}>
-                <Box>
-                  <Typography variant="body2" fontWeight={800}>{tower}</Typography>
-                  <Typography variant="caption" color="text.secondary">{meta.label}</Typography>
-                </Box>
+              <Stack direction="row" alignItems="center" justifyContent="space-between" mb={0.7}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: meta.color }} />
+                  <Box>
+                    <Typography variant="body2" fontWeight={800}>{tower}</Typography>
+                    <Typography variant="caption" color="text.secondary">{meta.label}</Typography>
+                  </Box>
+                </Stack>
                 <Typography variant="body2" fontWeight={800}>{count}</Typography>
               </Stack>
               <LinearProgress
                 variant="determinate"
                 value={(count / max) * 100}
                 sx={{
-                  height: 8,
+                  height: 9,
                   borderRadius: 999,
                   bgcolor: "rgba(148,163,184,0.10)",
                   "& .MuiLinearProgress-bar": {
                     borderRadius: 999,
-                    backgroundColor: meta.color,
+                    background: `linear-gradient(90deg, ${meta.color}, ${meta.color}B8)`,
                   },
                 }}
               />
               <Typography variant="caption" color="text.secondary" display="block" mt={0.45}>
-                {percentage}% of current feed
+                {percentage}% of all current requests
               </Typography>
             </Box>
           );
