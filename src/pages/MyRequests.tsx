@@ -17,31 +17,37 @@ export default function MyRequests() {
       <Box
         sx={{
           mb: 2,
-          p: { xs: 2.25, md: 2.75 },
+          px: { xs: 2, md: 2.5 },
+          py: { xs: 1.8, md: 2 },
           borderRadius: 3,
           background: "linear-gradient(135deg, rgba(17,24,39,0.98), rgba(13,24,48,0.92))",
           border: "1px solid rgba(96,165,250,0.18)",
           boxShadow: "0 18px 45px rgba(0,0,0,0.16)",
         }}
       >
-        <Stack direction={{ xs: "column", md: "row" }} spacing={2} alignItems={{ xs: "flex-start", md: "center" }}>
-          <Stack direction="row" spacing={1.4} alignItems="center">
-            <Box sx={{ width: 44, height: 44, borderRadius: 2.2, display: "grid", placeItems: "center", bgcolor: "rgba(79,140,255,0.12)", color: "primary.main", border: "1px solid rgba(96,165,250,0.16)" }}>
-              <AssignmentOutlinedIcon />
-            </Box>
-            <Box>
-              <Typography variant="caption" sx={{ color: "#93C5FD", fontWeight: 800, letterSpacing: 1.2, textTransform: "uppercase" }}>
-                Requester workspace
-              </Typography>
-              <Typography component="h1" sx={{ fontSize: { xs: "1.9rem", md: "2.25rem" }, fontWeight: 900, lineHeight: 1.05 }}>
-                My Requests
-              </Typography>
-            </Box>
-          </Stack>
-          <Typography color="text.secondary" sx={{ maxWidth: 560 }}>
-            Track requests you raised, see where they are in the delivery process, and review the latest ETA.
+        <Stack direction="row" spacing={1.4} alignItems="center">
+          <Box
+            sx={{
+              width: 44,
+              height: 44,
+              borderRadius: 2.2,
+              display: "grid",
+              placeItems: "center",
+              bgcolor: "rgba(79,140,255,0.12)",
+              color: "primary.main",
+              border: "1px solid rgba(96,165,250,0.16)",
+              flexShrink: 0,
+            }}
+          >
+            <AssignmentOutlinedIcon />
+          </Box>
+          <Typography component="h1" sx={{ fontSize: { xs: "1.9rem", md: "2.3rem" }, fontWeight: 900, lineHeight: 1.05, letterSpacing: -0.8 }}>
+            My Requests
           </Typography>
         </Stack>
+        <Typography color="text.secondary" sx={{ mt: 0.9, pl: { md: 7 } }}>
+          Track requests you raised, their current status, and the latest ETA.
+        </Typography>
       </Box>
 
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mb: 2.25 }}>
