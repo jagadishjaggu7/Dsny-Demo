@@ -150,7 +150,7 @@ export default function Dashboard() {
           </Box>
           <Box>
             <Typography variant="subtitle1" fontWeight={800}>Analytics view</Typography>
-            <Typography variant="body2" color="text.secondary">Filter both panels by request type.</Typography>
+            <Typography variant="body2" color="text.secondary">Filter analytics and requests by request type.</Typography>
           </Box>
         </Stack>
         <FormControl size="small" sx={{ minWidth: { xs: "100%", md: 260 } }}>
@@ -177,7 +177,11 @@ export default function Dashboard() {
         </Grid>
       </Grid>
 
-      <RecentTable />
+      <RecentTable
+        tickets={filteredTickets}
+        title={requestFilter === "All Requests" ? "All Recent Requests" : `${requestFilter === "Change Request" ? "Change Requests" : "Reporting / Data Issues"}`}
+        subtitle="Search the requests included in the current dashboard filter."
+      />
     </Box>
   );
 }
