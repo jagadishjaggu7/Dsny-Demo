@@ -2,12 +2,17 @@ import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import ScheduleOutlinedIcon from "@mui/icons-material/ScheduleOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import type { Ticket } from "../types/ticket";
 import { tickets } from "../data/tickets";
 import StatusChip from "../components/StatusChip";
 
 const requesterEmail = "disney.user@disney.com";
 
-export default function MyRequests() {
+interface MyRequestsProps {
+  onTicketClick?: (ticket: Ticket) => void;
+}
+
+export default function MyRequests({ onTicketClick }: MyRequestsProps) {
   const myRequests = tickets.filter((ticket) => ticket.requester === requesterEmail);
   const closedCount = myRequests.filter((ticket) => ticket.status === "Closed").length;
   const openCount = myRequests.length - closedCount;
@@ -70,14 +75,16 @@ export default function MyRequests() {
           <Paper
             key={ticket.id}
             elevation={0}
+            onClick={() => onTicketClick?.(ticket)}
             sx={{
               px: { xs: 2, md: 2.2 },
               py: { xs: 1.8, md: 2 },
               borderRadius: 3,
               bgcolor: "rgba(17,24,39,0.82)",
               border: "1px solid rgba(148,163,184,0.12)",
+              cursor: onTicketClick ? "pointer" : "default",
               transition: "border-color 0.2s ease, transform 0.2s ease",
-              "&:hover": { borderColor: "rgba(96,165,250,0.28)", transform: "translateY(-1px)" },
+              "&:hover": onTicketClick ? { borderColor: "rgba(96,165,250,0.28)", transform: "translateY(-1px)" } : undefined,
             }}
           >
             <Box
