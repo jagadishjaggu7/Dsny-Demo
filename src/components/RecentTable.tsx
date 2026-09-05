@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
+  Chip,
   InputAdornment,
   Paper,
   Table,
@@ -27,7 +28,7 @@ export default function RecentTable() {
 
     return tickets
       .filter((ticket) =>
-        [ticket.id, ticket.title].some((value) =>
+        [ticket.id, ticket.title, ticket.requestType, ticket.tower].some((value) =>
           value.toLowerCase().includes(normalized),
         ),
       )
@@ -60,10 +61,10 @@ export default function RecentTable() {
       >
         <Box>
           <Typography variant="h6" fontWeight={800}>
-            Recent Change Requests
+            Recent Requests
           </Typography>
           <Typography variant="body2" color="text.secondary" mt={0.4}>
-            Latest requests across PTP, RTR, and DFS.
+            Latest change requests and reporting/data issues across PTP, RTR, and DFS.
           </Typography>
         </Box>
 
@@ -71,10 +72,10 @@ export default function RecentTable() {
           size="small"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search CR number or title"
-          aria-label="Search change requests"
+          placeholder="Search ID, title, type or tower"
+          aria-label="Search requests"
           sx={{
-            width: { xs: "100%", sm: 285 },
+            width: { xs: "100%", sm: 315 },
             "& .MuiOutlinedInput-root": {
               borderRadius: 2,
               bgcolor: "rgba(15,23,42,0.7)",
@@ -91,10 +92,10 @@ export default function RecentTable() {
       </Box>
 
       <TableContainer sx={{ maxHeight: 430 }}>
-        <Table stickyHeader size="small" sx={{ minWidth: 780 }}>
+        <Table stickyHeader size="small" sx={{ minWidth: 900 }}>
           <TableHead>
             <TableRow>
-              {['CR Number', 'Title', 'Tower', 'Priority', 'Status', 'Assignee', 'ETA'].map((label) => (
+              {['CR Number', 'Type', 'Title', 'Tower', 'Priority', 'Status', 'Requester', 'ETA'].map((label) => (
                 <TableCell
                   key={label}
                   sx={{
@@ -115,6 +116,15 @@ export default function RecentTable() {
                 <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
                   {ticket.id}
                 </TableCell>
+                <TableCell sx={{ minWidth: 150 }}>
+                  <Chip
+                    label={ticket.requestType === "Change Request" ? "Change" : "Data issue"}
+                    size="small"
+                    variant="outlined"
+                    color={ticket.requestType === "Change Request" ? "primary" : "warning"}
+                    sx={{ fontWeight: 700 }}
+                  />
+                </TableCell>
                 <TableCell sx={{ minWidth: 250 }}>{ticket.title}</TableCell>
                 <TableCell>{ticket.tower}</TableCell>
                 <TableCell><PriorityBadge priority={ticket.priority} /></TableCell>
@@ -125,9 +135,9 @@ export default function RecentTable() {
             ))}
             {filteredTickets.length === 0 && (
               <TableRow>
-                <TableCell colSpan={7} align="center" sx={{ py: 5 }}>
+                <TableCell colSpan={8} align="center" sx={{ py: 5 }}>
                   <Typography color="text.secondary">
-                    No change requests match your search.
+                    No requests match your search.
                   </Typography>
                 </TableCell>
               </TableRow>
