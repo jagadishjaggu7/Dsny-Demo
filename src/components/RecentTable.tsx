@@ -28,7 +28,7 @@ export default function RecentTable() {
 
     return tickets
       .filter((ticket) =>
-        [ticket.id, ticket.title, ticket.requestType, ticket.tower].some((value) =>
+        [ticket.id, ticket.title, ticket.requestType, ticket.tower, ticket.requester].some((value) =>
           value.toLowerCase().includes(normalized),
         ),
       )
@@ -72,10 +72,10 @@ export default function RecentTable() {
           size="small"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search ID, title, type or tower"
+          placeholder="Search ID, title, type, tower or requester"
           aria-label="Search requests"
           sx={{
-            width: { xs: "100%", sm: 315 },
+            width: { xs: "100%", sm: 350 },
             "& .MuiOutlinedInput-root": {
               borderRadius: 2,
               bgcolor: "rgba(15,23,42,0.7)",
@@ -95,7 +95,7 @@ export default function RecentTable() {
         <Table stickyHeader size="small" sx={{ minWidth: 900 }}>
           <TableHead>
             <TableRow>
-              {['CR Number', 'Type', 'Title', 'Tower', 'Priority', 'Status', 'Requester', 'ETA'].map((label) => (
+              {["CR Number", "Type", "Title", "Tower", "Priority", "Status", "Requester", "ETA"].map((label) => (
                 <TableCell
                   key={label}
                   sx={{
@@ -113,9 +113,7 @@ export default function RecentTable() {
           <TableBody>
             {filteredTickets.map((ticket) => (
               <TableRow key={ticket.id} hover>
-                <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
-                  {ticket.id}
-                </TableCell>
+                <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>{ticket.id}</TableCell>
                 <TableCell sx={{ minWidth: 150 }}>
                   <Chip
                     label={ticket.requestType === "Change Request" ? "Change" : "Data issue"}
@@ -136,9 +134,7 @@ export default function RecentTable() {
             {filteredTickets.length === 0 && (
               <TableRow>
                 <TableCell colSpan={8} align="center" sx={{ py: 5 }}>
-                  <Typography color="text.secondary">
-                    No requests match your search.
-                  </Typography>
+                  <Typography color="text.secondary">No requests match your search.</Typography>
                 </TableCell>
               </TableRow>
             )}
