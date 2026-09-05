@@ -16,6 +16,8 @@ export interface Ticket {
   title: string;
   description?: string;
   tower: "PTP" | "RTR" | "DFS";
+  deliveryCentre?: string;
+  subprocess?: string;
   priority: TicketPriority;
   status: TicketStatus;
   requester: string;
