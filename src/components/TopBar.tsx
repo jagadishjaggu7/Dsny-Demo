@@ -14,20 +14,21 @@ export default function TopBar() {
       }}
     >
       <Toolbar sx={{ minHeight: "68px !important", px: { xs: 2, md: 3 } }}>
-        <Box display="flex" alignItems="center" gap={1.25}>
+        <Box display="flex" alignItems="center" gap={{ xs: 1.5, md: 1.9 }}>
           <Box
             sx={{
-              width: 36,
-              height: 36,
+              width: 38,
+              height: 38,
               borderRadius: 2,
               display: "grid",
               placeItems: "center",
               color: "primary.main",
               bgcolor: "rgba(79,140,255,0.10)",
               border: "1px solid rgba(79,140,255,0.16)",
+              flexShrink: 0,
             }}
           >
-            <DashboardOutlinedIcon sx={{ fontSize: 19 }} />
+            <DashboardOutlinedIcon sx={{ fontSize: 20 }} />
           </Box>
           <Typography sx={{ fontSize: "1rem", lineHeight: 1.1, fontWeight: 800, letterSpacing: -0.2 }}>
             DSNY ChangeHub
