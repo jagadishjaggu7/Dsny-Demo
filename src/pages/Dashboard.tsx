@@ -1,10 +1,9 @@
 import { useMemo } from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
 import KPICard from "../components/KPICard";
 import RecentTable from "../components/RecentTable";
@@ -47,15 +46,18 @@ export default function Dashboard() {
 
   return (
     <Box sx={{ maxWidth: 1500, mx: "auto", pb: 4 }}>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        alignItems={{ xs: "flex-start", md: "center" }}
-        justifyContent="space-between"
-        gap={2}
-        mb={2.5}
-      >
-        <Box>
+      <Box mb={2.5}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: { xs: "flex-start", md: "center" },
+            justifyContent: "space-between",
+            gap: 2,
+            flexWrap: "wrap",
+          }}
+        >
           <Typography
+            component="h1"
             sx={{
               fontSize: { xs: "2rem", md: "2.3rem" },
               lineHeight: 1.05,
@@ -63,39 +65,23 @@ export default function Dashboard() {
               letterSpacing: -1,
             }}
           >
-            Admin overview
-          </Typography>
-          <Typography color="text.secondary" mt={0.65}>
-            Monitor change requests, delivery progress, and operational workload.
+            Change Request Overview
           </Typography>
         </Box>
-
-        <Stack
-          direction="row"
-          spacing={0.8}
-          alignItems="center"
-          sx={{
-            px: 1.2,
-            py: 0.65,
-            border: "1px solid rgba(79,140,255,0.24)",
-            borderRadius: 999,
-            bgcolor: "rgba(79,140,255,0.06)",
-          }}
-        >
-          <AccessTimeOutlinedIcon sx={{ fontSize: 16, color: "#4F8CFF" }} />
-          <Typography variant="caption" fontWeight={800}>Live dashboard</Typography>
-        </Stack>
-      </Stack>
+        <Typography color="text.secondary" mt={0.6}>
+          Track request volume, workflow status, and tower workload.
+        </Typography>
+      </Box>
 
       <Grid container spacing={1.5}>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="Total Requests" value={String(tickets.length)} subtitle="Current request feed" icon={<AssignmentOutlinedIcon fontSize="small" />} accent="primary" />
+          <KPICard title="Total Requests" value={String(tickets.length)} subtitle="Requests tracked" icon={<AssignmentOutlinedIcon fontSize="small" />} accent="primary" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="In Development" value={String(analytics.statusCounts.DEV)} subtitle="Being implemented" icon={<CodeOutlinedIcon fontSize="small" />} accent="warning" />
+          <KPICard title="Development" value={String(analytics.statusCounts.DEV)} subtitle="Being implemented" icon={<CodeOutlinedIcon fontSize="small" />} accent="warning" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="In QA" value={String(analytics.statusCounts.QA)} subtitle="Awaiting validation" icon={<ScienceOutlinedIcon fontSize="small" />} accent="info" />
+          <KPICard title="QA Validation" value={String(analytics.statusCounts.QA)} subtitle="Awaiting validation" icon={<ScienceOutlinedIcon fontSize="small" />} accent="info" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
           <KPICard title="Closed" value={String(analytics.statusCounts.Closed)} subtitle="Completed requests" icon={<CheckCircleIcon fontSize="small" />} accent="success" />
