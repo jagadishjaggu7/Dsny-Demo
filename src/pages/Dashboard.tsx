@@ -111,7 +111,7 @@ export default function Dashboard() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={2.5} alignItems="stretch">
+      <Grid container spacing={1.5} sx={{ mt: { xs: 2, md: 2.25 } }} alignItems="stretch">
         <Grid size={{ xs: 12, lg: 7 }}>
           <Box sx={panelSx}>
             <StatusSplit data={analytics.statusCounts} />
