@@ -1,192 +1,108 @@
 import { useMemo } from "react";
-import { Box, Typography } from "@mui/material";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import CodeIcon from "@mui/icons-material/Code";
-import ScienceIcon from "@mui/icons-material/Science";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import GroupWorkIcon from "@mui/icons-material/GroupWork";
+import { Box, Grid, Paper, Stack, Typography } from "@mui/material";
+import AssignmentIcon from "@mui/icons-material/AssignmentOutlined";
+import CodeIcon from "@mui/icons-material/CodeOutlined";
+import ScienceIcon from "@mui/icons-material/ScienceOutlined";
+import CheckCircleIcon from "@mui/icons-material/CheckCircleOutline";
+import AccessTimeIcon from "@mui/icons-material/AccessTimeOutlined";
 
 import KPICard from "../components/KPICard";
 import RecentTable from "../components/RecentTable";
+import StatusSplit from "../components/StatusSplit";
+import TowerWorkload from "../components/TowerWorkload";
 import { tickets } from "../data/tickets";
+import type { TicketStatus } from "../types/ticket";
 
-const statusOrder = ["New", "Assigned", "DEV", "QA", "PRD", "Closed"] as const;
+const workflowStatuses: TicketStatus[] = ["New", "Assigned", "DEV", "QA", "PRD", "Closed"];
+
+const cardSx = {
+  p: { xs: 2, sm: 2.5 },
+  height: "100%",
+  borderRadius: 3,
+  border: "1px solid rgba(148,163,184,0.12)",
+  bgcolor: "rgba(17,24,39,0.82)",
+  boxShadow: "0 14px 34px rgba(2,6,23,0.18)",
+};
 
 export default function Dashboard() {
   const analytics = useMemo(() => {
-    const counts = Object.fromEntries(
-      statusOrder.map((status) => [
-        status,
-        tickets.filter((ticket) => ticket.status === status).length,
-      ]),
-    ) as Record<(typeof statusOrder)[number], number>;
+    const statusCounts = workflowStatuses.reduce<Record<TicketStatus, number>>(
+      (acc, status) => ({ ...acc, [status]: tickets.filter((ticket) => ticket.status === status).length }),
+      { New: 0, Assigned: 0, DEV: 0, QA: 0, PRD: 0, Closed: 0 },
+    );
+
+    const towerCounts: Record<string, number> = { PTP: 0, RTR: 0, DFS: 0 };
+    tickets.forEach((ticket) => { towerCounts[ticket.tower] += 1; });
 
     const active = tickets.filter((ticket) => ticket.status !== "Closed").length;
+    const highPriority = tickets.filter(
+      (ticket) => ticket.priority === "High" || ticket.priority === "Critical",
+    ).length;
 
-    const workload = [
-      { tower: "PTP", count: tickets.filter((ticket) => ticket.tower === "PTP").length },
-      { tower: "RTR", count: tickets.filter((ticket) => ticket.tower === "RTR").length },
-      { tower: "DFS", count: tickets.filter((ticket) => ticket.tower === "DFS").length },
-    ];
-
-    return { counts, active, workload };
+    return { statusCounts, towerCounts, active, highPriority };
   }, []);
 
   return (
     <Box>
-      <Box mb={3}>
-        <Typography variant="h4" fontWeight={800} letterSpacing={-0.5}>
-          Overview
-        </Typography>
-        <Typography variant="body2" color="text.secondary" mt={0.5}>
-          Monitor DSNY change requests, delivery progress, and workload.
-        </Typography>
-      </Box>
-
-      <Box
-        display="grid"
-        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-        gap={2.5}
-        sx={{
-          "@media (max-width: 1100px)": {
-            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-          },
-          "@media (max-width: 650px)": {
-            gridTemplateColumns: "1fr",
-          },
-        }}
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        alignItems={{ xs: "flex-start", sm: "flex-end" }}
+        justifyContent="space-between"
+        gap={2}
+        mb={3}
       >
-        <KPICard
-          title="Total Requests"
-          value={tickets.length.toString()}
-          subtitle="Latest requests in the dashboard feed"
-          icon={<AssignmentIcon fontSize="small" />}
-          accent="primary"
-        />
-
-        <KPICard
-          title="In Development"
-          value={analytics.counts.DEV.toString()}
-          subtitle="Currently being implemented"
-          icon={<CodeIcon fontSize="small" />}
-          accent="warning"
-        />
-
-        <KPICard
-          title="In QA"
-          value={analytics.counts.QA.toString()}
-          subtitle="Ready for validation"
-          icon={<ScienceIcon fontSize="small" />}
-          accent="info"
-        />
-
-        <KPICard
-          title="Closed"
-          value={analytics.counts.Closed.toString()}
-          subtitle="Successfully completed requests"
-          icon={<CheckCircleIcon fontSize="small" />}
-          accent="success"
-        />
-      </Box>
-
-      <Box
-        mt={3}
-        display="grid"
-        gridTemplateColumns="1.35fr 1fr"
-        gap={2.5}
-        sx={{
-          "@media (max-width: 900px)": {
-            gridTemplateColumns: "1fr",
-          },
-        }}
-      >
-        <Box
-          p={2.5}
-          sx={{
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: 3,
-            bgcolor: "background.paper",
-          }}
-        >
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2.25}>
-            <Box>
-              <Typography variant="h6" fontWeight={800}>
-                Status Split
-              </Typography>
-              <Typography variant="body2" color="text.secondary" mt={0.25}>
-                Current workflow distribution
-              </Typography>
-            </Box>
-            <Typography variant="body2" color="text.secondary">
-              {analytics.active} active
-            </Typography>
-          </Box>
-
-          <Box display="grid" gridTemplateColumns="repeat(3, minmax(0, 1fr))" gap={1.5}>
-            {statusOrder.map((status) => (
-              <Box
-                key={status}
-                p={1.5}
-                sx={{
-                  borderRadius: 2,
-                  border: "1px solid",
-                  borderColor: "divider",
-                }}
-              >
-                <Typography variant="caption" color="text.secondary" fontWeight={700}>
-                  {status}
-                </Typography>
-                <Typography variant="h5" fontWeight={800} mt={0.25}>
-                  {analytics.counts[status]}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
+        <Box>
+          <Typography variant="h4" fontWeight={800}>Overview</Typography>
+          <Typography variant="body2" color="text.secondary" mt={0.65}>
+            Monitor DSNY change requests, delivery progress, and workload.
+          </Typography>
         </Box>
+        <Stack direction="row" spacing={1} alignItems="center" color="text.secondary">
+          <AccessTimeIcon sx={{ fontSize: 18 }} />
+          <Typography variant="caption" fontWeight={700}>Live dashboard feed</Typography>
+        </Stack>
+      </Stack>
 
-        <Box
-          p={2.5}
-          sx={{
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: 3,
-            bgcolor: "background.paper",
-          }}
-        >
-          <Box display="flex" alignItems="center" gap={1} mb={2}>
-            <GroupWorkIcon fontSize="small" />
-            <Box>
-              <Typography variant="h6" fontWeight={800}>
-                Workload by Tower
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Tickets represented in the current feed
-              </Typography>
-            </Box>
-          </Box>
+      <Grid container spacing={2}>
+        <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+          <KPICard title="Total Requests" value={String(tickets.length)} subtitle="Requests in the current dashboard feed" icon={<AssignmentIcon fontSize="small" />} accent="primary" />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+          <KPICard title="In Development" value={String(analytics.statusCounts.DEV)} subtitle="Currently being implemented" icon={<CodeIcon fontSize="small" />} accent="warning" />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+          <KPICard title="In QA" value={String(analytics.statusCounts.QA)} subtitle="Ready for validation" icon={<ScienceIcon fontSize="small" />} accent="info" />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+          <KPICard title="Closed" value={String(analytics.statusCounts.Closed)} subtitle="Successfully completed requests" icon={<CheckCircleIcon fontSize="small" />} accent="success" />
+        </Grid>
+      </Grid>
 
-          <Box display="grid" gap={1.25}>
-            {analytics.workload.map(({ tower, count }) => (
-              <Box
-                key={tower}
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-                px={1.5}
-                py={1.25}
-                sx={{
-                  borderRadius: 2,
-                  bgcolor: "action.hover",
-                }}
-              >
-                <Typography fontWeight={700}>{tower}</Typography>
-                <Typography fontWeight={800}>{count}</Typography>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      </Box>
+      <Grid container spacing={2} mt={0.2}>
+        <Grid size={{ xs: 12, lg: 7 }}>
+          <Paper elevation={0} sx={cardSx}><StatusSplit data={analytics.statusCounts} /></Paper>
+        </Grid>
+        <Grid size={{ xs: 12, lg: 5 }}>
+          <Paper elevation={0} sx={cardSx}><TowerWorkload data={analytics.towerCounts} /></Paper>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} mt={0.2}>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Paper elevation={0} sx={{ ...cardSx, minHeight: 108 }}>
+            <Typography variant="caption" color="text.secondary" fontWeight={700}>Active workload</Typography>
+            <Typography variant="h5" fontWeight={800} mt={0.5}>{analytics.active}</Typography>
+            <Typography variant="body2" color="text.secondary" mt={0.35}>Requests still moving through the workflow.</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Paper elevation={0} sx={{ ...cardSx, minHeight: 108 }}>
+            <Typography variant="caption" color="text.secondary" fontWeight={700}>High priority exposure</Typography>
+            <Typography variant="h5" fontWeight={800} mt={0.5}>{analytics.highPriority}</Typography>
+            <Typography variant="body2" color="text.secondary" mt={0.35}>High and critical requests in the current feed.</Typography>
+          </Paper>
+        </Grid>
+      </Grid>
 
       <RecentTable />
     </Box>
