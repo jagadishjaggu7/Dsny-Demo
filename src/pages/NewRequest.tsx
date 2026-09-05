@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import {
   Alert,
@@ -24,6 +24,8 @@ import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 
 import type { RequestType, TicketPriority } from "../types/ticket";
 import { towers } from "../data/towers";
+import { deliveryCentres } from "../data/deliveryCentres";
+import { subprocesses } from "../data/subprocesses";
 
 interface NewRequestProps {
   onCancel: () => void;
@@ -43,6 +45,30 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
   const [requestType, setRequestType] = useState<RequestType>("Change Request");
   const [submitted, setSubmitted] = useState(false);
   const [priority, setPriority] = useState<TicketPriority>("Medium");
+  const [tower, setTower] = useState("");
+  const [deliveryCentre, setDeliveryCentre] = useState("");
+  const [subprocess, setSubprocess] = useState("");
+
+  const availableDeliveryCentres = useMemo(
+    () => deliveryCentres.filter((centre) => centre.towerCode === tower),
+    [tower],
+  );
+
+  const availableSubprocesses = useMemo(
+    () => subprocesses.filter((item) => item.towerCode === tower && item.deliveryCentreId === deliveryCentre),
+    [tower, deliveryCentre],
+  );
+
+  const handleTowerChange = (value: string) => {
+    setTower(value);
+    setDeliveryCentre("");
+    setSubprocess("");
+  };
+
+  const handleDeliveryCentreChange = (value: string) => {
+    setDeliveryCentre(value);
+    setSubprocess("");
+  };
 
   return (
     <Box sx={{ maxWidth: 1080, mx: "auto", pb: 5 }}>
@@ -71,11 +97,30 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
         <Stack spacing={2.25}>
           <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
             <TextField fullWidth label="Title" required placeholder={requestType === "Change Request" ? "e.g. Add vendor payment KPI enhancement" : "e.g. Power BI KPI total does not match source"} />
-            <FormControl fullWidth>
+            <FormControl fullWidth required>
               <InputLabel id="tower-label">Tower</InputLabel>
-              <Select labelId="tower-label" label="Tower" defaultValue="">
+              <Select labelId="tower-label" label="Tower" value={tower} onChange={(event) => handleTowerChange(event.target.value)}>
                 <MenuItem value="" disabled>Select a tower</MenuItem>
-                {towers.map((tower) => <MenuItem key={tower.code} value={tower.code}>{tower.code} · {tower.name}</MenuItem>)}
+                {towers.map((item) => <MenuItem key={item.code} value={item.code}>{item.code} · {item.name}</MenuItem>)}
+              </Select>
+            </FormControl>
+          </Stack>
+
+          <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
+            <FormControl fullWidth required disabled={!tower}>
+              <InputLabel id="delivery-centre-label">Delivery Centre</InputLabel>
+              <Select labelId="delivery-centre-label" label="Delivery Centre" value={deliveryCentre} onChange={(event) => handleDeliveryCentreChange(event.target.value)}>
+                <MenuItem value="" disabled>{tower ? "Select a delivery centre" : "Select a tower first"}</MenuItem>
+                {availableDeliveryCentres.map((centre) => <MenuItem key={centre.id} value={centre.id}>{centre.name}</MenuItem>)}
+                {tower && availableDeliveryCentres.length === 0 && <MenuItem value="" disabled>Reference data not configured</MenuItem>}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth required disabled={!deliveryCentre}>
+              <InputLabel id="subprocess-label">Sub-process</InputLabel>
+              <Select labelId="subprocess-label" label="Sub-process" value={subprocess} onChange={(event) => setSubprocess(event.target.value)}>
+                <MenuItem value="" disabled>{deliveryCentre ? "Select a sub-process" : "Select a delivery centre first"}</MenuItem>
+                {availableSubprocesses.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
+                {deliveryCentre && availableSubprocesses.length === 0 && <MenuItem value="" disabled>Reference data not configured</MenuItem>}
               </Select>
             </FormControl>
           </Stack>
