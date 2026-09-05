@@ -13,8 +13,9 @@ import AssignmentRounded from "@mui/icons-material/AssignmentRounded";
 import ListAltRounded from "@mui/icons-material/ListAltRounded";
 import AddCircleOutlineRounded from "@mui/icons-material/AddCircleOutlineRounded";
 import CodeRounded from "@mui/icons-material/CodeRounded";
+import VisibilityOutlined from "@mui/icons-material/VisibilityOutlined";
 
-export type AppRole = "admin" | "developer" | "requester";
+export type AppRole = "admin" | "developer" | "requester" | "viewer";
 export type AppPage = "dashboard" | "my-requests" | "all-requests" | "new-request" | "my-queue";
 
 interface SidebarProps {
@@ -33,12 +34,16 @@ export default function Sidebar({ role, activePage, onNavigate }: SidebarProps) 
       ? [
           { page: "my-queue" as const, label: "My Queue", icon: <CodeRounded /> },
         ]
-      : [
-          { page: "my-requests" as const, label: "My Requests", icon: <AssignmentRounded /> },
-          { page: "new-request" as const, label: "New Request", icon: <AddCircleOutlineRounded /> },
-        ];
+      : role === "viewer"
+        ? [
+            { page: "all-requests" as const, label: "All Requests", icon: <VisibilityOutlined /> },
+          ]
+        : [
+            { page: "my-requests" as const, label: "My Requests", icon: <AssignmentRounded /> },
+            { page: "new-request" as const, label: "New Request", icon: <AddCircleOutlineRounded /> },
+          ];
 
-  const roleLabel = role === "admin" ? "Admin" : role === "developer" ? "Developer" : "Requester";
+  const roleLabel = role === "admin" ? "Admin" : role === "developer" ? "Developer" : role === "viewer" ? "Read Only" : "Requester";
 
   return (
     <Box sx={{ width: 250, bgcolor: "background.paper", borderRight: "1px solid #334155", minHeight: "100vh" }}>
