@@ -21,12 +21,15 @@ import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import BugReportOutlinedIcon from "@mui/icons-material/BugReportOutlined";
 import BuildOutlinedIcon from "@mui/icons-material/BuildOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 
 import type { RequestType, TicketPriority } from "../types/ticket";
 
 interface NewRequestProps {
   onCancel: () => void;
 }
+
+const heroImage = "https://cdn.wallpapersafari.com/22/45/E62Jvs.jpg";
 
 const requestOptions: Array<{
   type: RequestType;
@@ -55,19 +58,59 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
 
   return (
     <Box sx={{ maxWidth: 1080, mx: "auto", pb: 5 }}>
-      <Box sx={{ mb: 3 }}>
-        <Typography
-          variant="caption"
-          sx={{ color: "#93C5FD", fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}
-        >
-          Request intake
-        </Typography>
-        <Typography component="h1" sx={{ mt: 0.4, fontSize: { xs: "2rem", md: "2.45rem" }, fontWeight: 850, letterSpacing: -1 }}>
-          New Request
-        </Typography>
-        <Typography color="text.secondary" mt={0.6}>
-          Choose what you need help with. The form will capture the details needed by the delivery team.
-        </Typography>
+      <Box
+        sx={{
+          position: "relative",
+          overflow: "hidden",
+          mb: 3,
+          minHeight: { xs: 180, md: 195 },
+          px: { xs: 2.5, md: 3.25 },
+          py: { xs: 2.75, md: 3 },
+          display: "flex",
+          alignItems: "center",
+          borderRadius: 4,
+          border: "1px solid rgba(96,165,250,0.20)",
+          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.98) 0%, rgba(5,10,20,0.88) 52%, rgba(7,13,24,0.52) 100%), url(${heroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center 38%",
+          boxShadow: "0 20px 52px rgba(2,6,23,0.26)",
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            background: "radial-gradient(circle at 88% 50%, rgba(79,140,255,0.18), transparent 34%)",
+            pointerEvents: "none",
+          },
+        }}
+      >
+        <Stack direction={{ xs: "column", lg: "row" }} spacing={2.5} justifyContent="space-between" alignItems={{ xs: "flex-start", lg: "center" }} sx={{ position: "relative", zIndex: 1, width: "100%" }}>
+          <Box sx={{ maxWidth: 720 }}>
+            <Stack direction="row" spacing={1} alignItems="center" mb={1.1}>
+              <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
+              <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.35, textTransform: "uppercase" }}>
+                Request intake
+              </Typography>
+            </Stack>
+            <Typography component="h1" sx={{ fontSize: { xs: "2.05rem", md: "2.9rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.5, textShadow: "0 8px 28px rgba(0,0,0,0.35)" }}>
+              Create a New Request
+            </Typography>
+            <Typography color="rgba(226,232,240,0.82)" mt={1}>
+              Log a delivery change or report a Power BI / data issue for investigation.
+            </Typography>
+          </Box>
+
+          <Box sx={{ width: { xs: "100%", lg: 220 }, p: 1.8, borderRadius: 3, bgcolor: "rgba(15,23,42,0.64)", border: "1px solid rgba(148,163,184,0.16)", backdropFilter: "blur(8px)" }}>
+            <Stack direction="row" spacing={1.1} alignItems="center">
+              <Box sx={{ width: 38, height: 38, borderRadius: 2, display: "grid", placeItems: "center", bgcolor: "rgba(79,140,255,0.12)", color: "primary.main" }}>
+                <AssignmentTurnedInOutlinedIcon fontSize="small" />
+              </Box>
+              <Box>
+                <Typography variant="caption" color="text.secondary">Request types</Typography>
+                <Typography fontWeight={900}>{requestOptions.length} ways to raise</Typography>
+              </Box>
+            </Stack>
+          </Box>
+        </Stack>
       </Box>
 
       {submitted && (
