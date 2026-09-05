@@ -55,78 +55,55 @@ export default function Dashboard() {
     return { statusCounts, towerCounts };
   }, [filteredTickets]);
 
-  const changeRequests = tickets.filter((ticket) => ticket.requestType === "Change Request").length;
-  const reportingIssues = tickets.filter((ticket) => ticket.requestType === "Reporting / Data Issue").length;
-
   return (
     <Box sx={{ maxWidth: 1480, mx: "auto", pb: 5 }}>
       <Box
         sx={{
           position: "relative",
           overflow: "hidden",
-          minHeight: { xs: 175, md: 185 },
-          mb: 3,
+          minHeight: { xs: 128, md: 142 },
+          mb: 1.75,
           px: { xs: 2.5, md: 3.25 },
-          py: { xs: 2.75, md: 3 },
+          py: { xs: 2.25, md: 2.5 },
           display: "flex",
           alignItems: "center",
-          borderRadius: 4,
-          border: "1px solid rgba(96,165,250,0.22)",
-          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.97) 0%, rgba(5,10,20,0.88) 48%, rgba(7,13,24,0.42) 100%), url(${heroImage})`,
+          borderRadius: 3.5,
+          border: "1px solid rgba(96,165,250,0.20)",
+          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.94) 0%, rgba(5,10,20,0.78) 55%, rgba(7,13,24,0.48) 100%), url(${heroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center 44%",
-          boxShadow: "0 20px 52px rgba(2,6,23,0.28)",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            background: "radial-gradient(circle at 88% 50%, rgba(79,140,255,0.18), transparent 34%)",
-            pointerEvents: "none",
-          },
+          boxShadow: "0 18px 44px rgba(2,6,23,0.22)",
         }}
       >
-        <Stack
-          direction={{ xs: "column", lg: "row" }}
-          spacing={{ xs: 2.5, lg: 3 }}
-          alignItems={{ xs: "flex-start", lg: "center" }}
-          justifyContent="space-between"
-          sx={{ position: "relative", zIndex: 1, width: "100%" }}
-        >
-          <Box sx={{ maxWidth: 780 }}>
-            <Stack direction="row" spacing={1} alignItems="center" mb={1.1}>
-              <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
-              <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.4, textTransform: "uppercase" }}>
-                Administration · ChangeHub
-              </Typography>
-            </Stack>
-            <Typography
-              component="h1"
-              sx={{
-                fontSize: { xs: "2.05rem", md: "3rem" },
-                lineHeight: 0.98,
-                fontWeight: 900,
-                letterSpacing: -1.5,
-                textShadow: "0 8px 28px rgba(0,0,0,0.35)",
-              }}
-            >
-              Change Request Overview
+        <Box sx={{ position: "relative", zIndex: 1 }}>
+          <Stack direction="row" spacing={1} alignItems="center" mb={0.8}>
+            <Box sx={{ width: 9, height: 9, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
+            <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.35, textTransform: "uppercase" }}>
+              Administration
             </Typography>
-            <Typography color="rgba(226,232,240,0.82)" mt={1} sx={{ fontSize: { xs: "0.95rem", md: "1rem" } }}>
-              Monitor request volume, workflow status, and delivery workload across DSNY operations.
-            </Typography>
-          </Box>
-
-          <Stack direction={{ xs: "row", lg: "column" }} spacing={1.2} sx={{ minWidth: { lg: 190 } }}>
-            <Box sx={{ px: 1.6, py: 1.15, borderRadius: 2.5, bgcolor: "rgba(15,23,42,0.62)", border: "1px solid rgba(148,163,184,0.16)", backdropFilter: "blur(8px)" }}>
-              <Typography variant="caption" color="text.secondary">Change requests</Typography>
-              <Typography fontWeight={900} fontSize="1.35rem" lineHeight={1.1}>{changeRequests}</Typography>
-            </Box>
-            <Box sx={{ px: 1.6, py: 1.15, borderRadius: 2.5, bgcolor: "rgba(15,23,42,0.62)", border: "1px solid rgba(148,163,184,0.16)", backdropFilter: "blur(8px)" }}>
-              <Typography variant="caption" color="text.secondary">Reporting / data issues</Typography>
-              <Typography fontWeight={900} fontSize="1.35rem" lineHeight={1.1}>{reportingIssues}</Typography>
-            </Box>
           </Stack>
-        </Stack>
+          <Typography component="h1" sx={{ fontSize: { xs: "2rem", md: "2.75rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.35, textShadow: "0 8px 28px rgba(0,0,0,0.38)" }}>
+            Change Request Overview
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          mb: 2.5,
+          px: { xs: 1.25, md: 1.75 },
+          py: 1.15,
+          borderLeft: "3px solid #4F8CFF",
+          borderRadius: 1.5,
+          bgcolor: "rgba(79,140,255,0.06)",
+          borderTop: "1px solid rgba(79,140,255,0.10)",
+          borderRight: "1px solid rgba(79,140,255,0.10)",
+          borderBottom: "1px solid rgba(79,140,255,0.10)",
+        }}
+      >
+        <Typography color="rgba(226,232,240,0.82)" sx={{ fontSize: { xs: "0.92rem", md: "0.98rem" } }}>
+          Monitor request volume, workflow status, and delivery workload across DSNY operations.
+        </Typography>
       </Box>
 
       <Grid container spacing={1.5}>
@@ -182,14 +159,10 @@ export default function Dashboard() {
 
       <Grid container spacing={1.5} alignItems="stretch">
         <Grid size={{ xs: 12, lg: 7 }}>
-          <Box sx={panelSx}>
-            <StatusSplit data={analytics.statusCounts} />
-          </Box>
+          <Box sx={panelSx}><StatusSplit data={analytics.statusCounts} /></Box>
         </Grid>
         <Grid size={{ xs: 12, lg: 5 }}>
-          <Box sx={panelSx}>
-            <TowerWorkload data={analytics.towerCounts} />
-          </Box>
+          <Box sx={panelSx}><TowerWorkload data={analytics.towerCounts} /></Box>
         </Grid>
       </Grid>
 
