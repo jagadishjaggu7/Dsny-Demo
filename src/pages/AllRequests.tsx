@@ -1,8 +1,13 @@
 import { Box } from "@mui/material";
 import RecentTable from "../components/RecentTable";
+import type { Ticket } from "../types/ticket";
 import { tickets } from "../data/tickets";
 
-export default function AllRequests() {
+interface AllRequestsProps {
+  onTicketClick?: (ticket: Ticket) => void;
+}
+
+export default function AllRequests({ onTicketClick }: AllRequestsProps) {
   return (
     <Box sx={{ maxWidth: 1480, mx: "auto", pb: 5 }}>
       <Box sx={{ mb: 2.5 }}>
@@ -14,6 +19,7 @@ export default function AllRequests() {
       </Box>
       <RecentTable
         tickets={tickets}
+        onTicketClick={onTicketClick}
         title="All Requests"
         subtitle="Search all change requests and reporting/data issues across PTP, RTR, and DFS."
       />
