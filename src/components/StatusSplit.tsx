@@ -34,9 +34,9 @@ export default function StatusSplit({ data }: StatusSplitProps) {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "220px minmax(0, 390px)" },
+          gridTemplateColumns: { xs: "1fr", md: "220px 280px" },
           justifyContent: { xs: "stretch", md: "start" },
-          gap: { xs: 1.5, md: 3 },
+          gap: { xs: 1.5, md: 2.25 },
           alignItems: "center",
         }}
       >
@@ -91,15 +91,15 @@ export default function StatusSplit({ data }: StatusSplitProps) {
           </Box>
         </Box>
 
-        <Box sx={{ minWidth: 0, width: "100%", maxWidth: 390 }}>
+        <Box sx={{ minWidth: 0, width: "280px", maxWidth: "100%" }}>
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "minmax(0,1fr) 32px 52px",
-              columnGap: 1.5,
+              gridTemplateColumns: "minmax(0, 1fr) 28px 46px",
+              columnGap: 1,
               alignItems: "center",
-              px: 1,
-              mb: 0.45,
+              px: 0.75,
+              mb: 0.35,
             }}
           >
             <Typography variant="caption" color="text.secondary" fontWeight={800}>
@@ -113,7 +113,7 @@ export default function StatusSplit({ data }: StatusSplitProps) {
             </Typography>
           </Box>
 
-          <Stack spacing={0.4}>
+          <Stack spacing={0.25}>
             {statuses.map((status) => {
               const count = data[status];
               const percent = total ? Math.round((count / total) * 100) : 0;
@@ -123,11 +123,11 @@ export default function StatusSplit({ data }: StatusSplitProps) {
                   key={status}
                   sx={{
                     display: "grid",
-                    gridTemplateColumns: "minmax(0,1fr) 32px 52px",
-                    columnGap: 1.5,
+                    gridTemplateColumns: "minmax(0, 1fr) 28px 46px",
+                    columnGap: 1,
                     alignItems: "center",
-                    minHeight: 34,
-                    px: 1,
+                    minHeight: 32,
+                    px: 0.75,
                     borderRadius: 1.5,
                     "&:hover": { bgcolor: "rgba(255,255,255,0.035)" },
                   }}
