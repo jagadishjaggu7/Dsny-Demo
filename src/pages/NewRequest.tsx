@@ -21,7 +21,6 @@ import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import BugReportOutlinedIcon from "@mui/icons-material/BugReportOutlined";
 import BuildOutlinedIcon from "@mui/icons-material/BuildOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 
 import type { RequestType, TicketPriority } from "../types/ticket";
 
@@ -62,28 +61,35 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
         sx={{
           position: "relative",
           overflow: "hidden",
-          minHeight: { xs: 132, md: 145 },
+          minHeight: { xs: 172, md: 188 },
           mb: 1.75,
-          px: { xs: 2.5, md: 3.25 },
-          py: { xs: 2.25, md: 2.5 },
+          px: { xs: 2.75, md: 4 },
+          py: { xs: 3, md: 3.5 },
           display: "flex",
           alignItems: "center",
           borderRadius: 3.5,
           border: "1px solid rgba(96,165,250,0.20)",
-          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.95) 0%, rgba(5,10,20,0.80) 55%, rgba(7,13,24,0.50) 100%), url(${heroImage})`,
+          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.96) 0%, rgba(5,10,20,0.84) 52%, rgba(7,13,24,0.48) 100%), url(${heroImage})`,
           backgroundSize: "cover",
-          backgroundPosition: "center 44%",
+          backgroundPosition: "center 42%",
           boxShadow: "0 18px 44px rgba(2,6,23,0.22)",
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            background: "radial-gradient(circle at 78% 45%, rgba(79,140,255,0.18), transparent 32%)",
+            pointerEvents: "none",
+          },
         }}
       >
-        <Box sx={{ position: "relative", zIndex: 1 }}>
-          <Stack direction="row" spacing={1} alignItems="center" mb={0.8}>
-            <Box sx={{ width: 9, height: 9, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
-            <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.35, textTransform: "uppercase" }}>
-              Request intake
+        <Box sx={{ position: "relative", zIndex: 1, maxWidth: 900 }}>
+          <Stack direction="row" spacing={1.1} alignItems="center" mb={1}>
+            <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
+            <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.45, textTransform: "uppercase" }}>
+              Request Intake
             </Typography>
           </Stack>
-          <Typography component="h1" sx={{ fontSize: { xs: "2rem", md: "2.75rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.35, textShadow: "0 8px 28px rgba(0,0,0,0.38)" }}>
+          <Typography component="h1" sx={{ fontSize: { xs: "2.25rem", md: "3.15rem" }, lineHeight: 0.98, fontWeight: 900, letterSpacing: -1.6, textShadow: "0 8px 28px rgba(0,0,0,0.4)" }}>
             Create a New Request
           </Typography>
         </Box>
@@ -91,18 +97,22 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
 
       <Box
         sx={{
-          mb: 2.75,
-          px: { xs: 1.25, md: 1.75 },
-          py: 1.15,
+          mb: 2.5,
+          px: { xs: 1.5, md: 1.9 },
+          py: 1.2,
+          display: "flex",
+          alignItems: "center",
+          gap: 1.1,
           borderLeft: "3px solid #4F8CFF",
           borderRadius: 1.5,
-          bgcolor: "rgba(79,140,255,0.06)",
+          bgcolor: "rgba(79,140,255,0.055)",
           borderTop: "1px solid rgba(79,140,255,0.10)",
           borderRight: "1px solid rgba(79,140,255,0.10)",
           borderBottom: "1px solid rgba(79,140,255,0.10)",
         }}
       >
-        <Typography color="rgba(226,232,240,0.82)">
+        <BuildOutlinedIcon sx={{ color: "#93C5FD", fontSize: 18, flexShrink: 0 }} />
+        <Typography color="rgba(226,232,240,0.84)" sx={{ fontSize: { xs: "0.92rem", md: "0.98rem" } }}>
           Choose whether you are requesting a new change or reporting an issue with existing Power BI or report data.
         </Typography>
       </Box>
