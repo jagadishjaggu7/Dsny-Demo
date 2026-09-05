@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
@@ -16,12 +16,14 @@ const workflowStatuses: TicketStatus[] = ["New", "Assigned", "DEV", "QA", "PRD",
 
 const panelSx = {
   height: "100%",
-  p: { xs: 2, md: 2.5 },
+  p: { xs: 2, md: 2.25 },
   borderRadius: 3,
   border: "1px solid rgba(148,163,184,0.10)",
-  bgcolor: "rgba(15,23,42,0.78)",
-  boxShadow: "0 10px 28px rgba(2,6,23,0.16)",
+  bgcolor: "#111827",
+  boxShadow: "0 12px 30px rgba(2,6,23,0.14)",
 };
+
+const heroImage = "https://cdn.wallpapersafari.com/22/45/E62Jvs.jpg";
 
 export default function Dashboard() {
   const analytics = useMemo(() => {
@@ -50,62 +52,55 @@ export default function Dashboard() {
         sx={{
           position: "relative",
           overflow: "hidden",
-          minHeight: { xs: 150, md: 168 },
-          mb: 2.25,
+          minHeight: { xs: 146, md: 160 },
+          mb: 2.75,
           px: { xs: 2.25, md: 3 },
-          py: { xs: 2.25, md: 2.75 },
+          py: { xs: 2.25, md: 2.5 },
           display: "flex",
           alignItems: "center",
-          borderRadius: 3.5,
-          border: "1px solid rgba(79,140,255,0.16)",
-          background:
-            "radial-gradient(circle at 82% 20%, rgba(79,140,255,0.17), transparent 30%), linear-gradient(135deg, rgba(20,31,52,0.98), rgba(11,18,32,0.94))",
-          boxShadow: "0 18px 46px rgba(2,6,23,0.18)",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "linear-gradient(rgba(148,163,184,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.035) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-            maskImage: "linear-gradient(90deg, black 0%, rgba(0,0,0,0.55) 55%, transparent 90%)",
-            pointerEvents: "none",
-          },
+          borderRadius: 3,
+          border: "1px solid rgba(79,140,255,0.18)",
+          backgroundImage: `linear-gradient(90deg, rgba(7,13,24,0.97) 0%, rgba(7,13,24,0.89) 52%, rgba(7,13,24,0.56) 100%), url(${heroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center 48%",
+          boxShadow: "0 18px 46px rgba(2,6,23,0.22)",
           "&::after": {
             content: '""',
             position: "absolute",
-            width: 180,
-            height: 180,
-            right: -60,
-            top: -80,
-            borderRadius: "50%",
-            border: "1px solid rgba(79,140,255,0.10)",
-            boxShadow: "0 0 0 28px rgba(79,140,255,0.025), 0 0 0 56px rgba(79,140,255,0.018)",
+            inset: 0,
+            background:
+              "radial-gradient(circle at 82% 28%, rgba(59,130,246,0.18), transparent 26%), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
+            backgroundSize: "auto, 32px 32px, 32px 32px",
             pointerEvents: "none",
           },
         }}
       >
-        <Box sx={{ position: "relative", zIndex: 1 }}>
+        <Box sx={{ position: "relative", zIndex: 1, maxWidth: 760 }}>
           <Typography
             variant="caption"
-            sx={{ color: "#7FB0FF", fontWeight: 800, letterSpacing: 1.1, textTransform: "uppercase" }}
+            sx={{
+              color: "#93C5FD",
+              fontWeight: 800,
+              letterSpacing: 1,
+              textTransform: "uppercase",
+            }}
           >
-            DSNY · Administration
+            Administration
           </Typography>
           <Typography
             component="h1"
             sx={{
-              mt: 0.45,
-              fontSize: { xs: "2rem", md: "2.65rem" },
-              lineHeight: 1,
+              mt: 0.35,
+              fontSize: { xs: "2rem", md: "2.45rem" },
+              lineHeight: 1.02,
               fontWeight: 850,
-              letterSpacing: -1.2,
+              letterSpacing: -1.15,
             }}
           >
             Change Request Overview
           </Typography>
-          <Typography color="text.secondary" mt={0.75} sx={{ maxWidth: 760 }}>
-            A clear view of request volume, workflow status, and business-tower workload.
+          <Typography color="rgba(226,232,240,0.80)" mt={0.65}>
+            Track request volume, workflow status, and tower workload.
           </Typography>
         </Box>
       </Box>
@@ -125,7 +120,7 @@ export default function Dashboard() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={1.5} mt={1.5} alignItems="stretch">
+      <Grid container spacing={1.5} mt={2.25} alignItems="stretch">
         <Grid size={{ xs: 12, lg: 7 }}>
           <Box sx={panelSx}>
             <StatusSplit data={analytics.statusCounts} />
