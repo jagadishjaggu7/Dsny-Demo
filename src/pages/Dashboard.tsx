@@ -109,13 +109,13 @@ export default function Dashboard() {
           <KPICard title="Total Requests" value={String(tickets.length)} subtitle="All requests tracked" icon={<AssignmentOutlinedIcon fontSize="small" />} accent="primary" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="Development" value={String(analytics.statusCounts.DEV)} subtitle="Selected request type" icon={<CodeOutlinedIcon fontSize="small" />} accent="warning" />
+          <KPICard title="Development" value={String(tickets.filter((ticket) => ticket.status === "DEV").length)} subtitle="All requests tracked" icon={<CodeOutlinedIcon fontSize="small" />} accent="warning" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="QA Validation" value={String(analytics.statusCounts.QA)} subtitle="Selected request type" icon={<ScienceOutlinedIcon fontSize="small" />} accent="info" />
+          <KPICard title="QA Validation" value={String(tickets.filter((ticket) => ticket.status === "QA").length)} subtitle="All requests tracked" icon={<ScienceOutlinedIcon fontSize="small" />} accent="info" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="Closed" value={String(analytics.statusCounts.Closed)} subtitle="Selected request type" icon={<CheckCircleIcon fontSize="small" />} accent="success" />
+          <KPICard title="Closed" value={String(tickets.filter((ticket) => ticket.status === "Closed").length)} subtitle="All requests tracked" icon={<CheckCircleIcon fontSize="small" />} accent="success" />
         </Grid>
       </Grid>
 
