@@ -62,55 +62,49 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
         sx={{
           position: "relative",
           overflow: "hidden",
-          mb: 3,
-          minHeight: { xs: 180, md: 195 },
+          minHeight: { xs: 132, md: 145 },
+          mb: 1.75,
           px: { xs: 2.5, md: 3.25 },
-          py: { xs: 2.75, md: 3 },
+          py: { xs: 2.25, md: 2.5 },
           display: "flex",
           alignItems: "center",
-          borderRadius: 4,
+          borderRadius: 3.5,
           border: "1px solid rgba(96,165,250,0.20)",
-          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.98) 0%, rgba(5,10,20,0.88) 52%, rgba(7,13,24,0.52) 100%), url(${heroImage})`,
+          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.95) 0%, rgba(5,10,20,0.80) 55%, rgba(7,13,24,0.50) 100%), url(${heroImage})`,
           backgroundSize: "cover",
-          backgroundPosition: "center 38%",
-          boxShadow: "0 20px 52px rgba(2,6,23,0.26)",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            background: "radial-gradient(circle at 88% 50%, rgba(79,140,255,0.18), transparent 34%)",
-            pointerEvents: "none",
-          },
+          backgroundPosition: "center 44%",
+          boxShadow: "0 18px 44px rgba(2,6,23,0.22)",
         }}
       >
-        <Stack direction={{ xs: "column", lg: "row" }} spacing={2.5} justifyContent="space-between" alignItems={{ xs: "flex-start", lg: "center" }} sx={{ position: "relative", zIndex: 1, width: "100%" }}>
-          <Box sx={{ maxWidth: 720 }}>
-            <Stack direction="row" spacing={1} alignItems="center" mb={1.1}>
-              <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
-              <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.35, textTransform: "uppercase" }}>
-                Request intake
-              </Typography>
-            </Stack>
-            <Typography component="h1" sx={{ fontSize: { xs: "2.05rem", md: "2.9rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.5, textShadow: "0 8px 28px rgba(0,0,0,0.35)" }}>
-              Create a New Request
+        <Box sx={{ position: "relative", zIndex: 1 }}>
+          <Stack direction="row" spacing={1} alignItems="center" mb={0.8}>
+            <Box sx={{ width: 9, height: 9, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
+            <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.35, textTransform: "uppercase" }}>
+              Request intake
             </Typography>
-            <Typography color="rgba(226,232,240,0.82)" mt={1}>
-              Log a delivery change or report a Power BI / data issue for investigation.
-            </Typography>
-          </Box>
+          </Stack>
+          <Typography component="h1" sx={{ fontSize: { xs: "2rem", md: "2.75rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.35, textShadow: "0 8px 28px rgba(0,0,0,0.38)" }}>
+            Create a New Request
+          </Typography>
+        </Box>
+      </Box>
 
-          <Box sx={{ width: { xs: "100%", lg: 220 }, p: 1.8, borderRadius: 3, bgcolor: "rgba(15,23,42,0.64)", border: "1px solid rgba(148,163,184,0.16)", backdropFilter: "blur(8px)" }}>
-            <Stack direction="row" spacing={1.1} alignItems="center">
-              <Box sx={{ width: 38, height: 38, borderRadius: 2, display: "grid", placeItems: "center", bgcolor: "rgba(79,140,255,0.12)", color: "primary.main" }}>
-                <AssignmentTurnedInOutlinedIcon fontSize="small" />
-              </Box>
-              <Box>
-                <Typography variant="caption" color="text.secondary">Request types</Typography>
-                <Typography fontWeight={900}>{requestOptions.length} ways to raise</Typography>
-              </Box>
-            </Stack>
-          </Box>
-        </Stack>
+      <Box
+        sx={{
+          mb: 2.75,
+          px: { xs: 1.25, md: 1.75 },
+          py: 1.15,
+          borderLeft: "3px solid #4F8CFF",
+          borderRadius: 1.5,
+          bgcolor: "rgba(79,140,255,0.06)",
+          borderTop: "1px solid rgba(79,140,255,0.10)",
+          borderRight: "1px solid rgba(79,140,255,0.10)",
+          borderBottom: "1px solid rgba(79,140,255,0.10)",
+        }}
+      >
+        <Typography color="rgba(226,232,240,0.82)">
+          Choose whether you are requesting a new change or reporting an issue with existing Power BI or report data.
+        </Typography>
       </Box>
 
       {submitted && (
