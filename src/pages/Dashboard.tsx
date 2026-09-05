@@ -11,7 +11,7 @@ import RecentTable from "../components/RecentTable";
 import StatusSplit from "../components/StatusSplit";
 import TowerWorkload from "../components/TowerWorkload";
 import { tickets } from "../data/tickets";
-import type { RequestType, TicketStatus } from "../types/ticket";
+import type { RequestType, Ticket, TicketStatus } from "../types/ticket";
 
 const workflowStatuses: TicketStatus[] = ["New", "Assigned", "DEV", "QA", "PRD", "Closed"];
 type DashboardRequestFilter = RequestType | "All Requests";
@@ -25,7 +25,11 @@ const panelSx = {
   boxShadow: "0 12px 30px rgba(2,6,23,0.14)",
 };
 
-export default function Dashboard() {
+interface DashboardProps {
+  onTicketClick?: (ticket: Ticket) => void;
+}
+
+export default function Dashboard({ onTicketClick }: DashboardProps) {
   const [requestFilter, setRequestFilter] = useState<DashboardRequestFilter>("Change Request");
 
   const filteredTickets = useMemo(() => {
@@ -179,7 +183,8 @@ export default function Dashboard() {
 
       <RecentTable
         tickets={filteredTickets}
-        title={requestFilter === "All Requests" ? "All Recent Requests" : `${requestFilter === "Change Request" ? "Change Requests" : "Reporting / Data Issues"}`}
+        onTicketClick={onTicketClick}
+        title={requestFilter === "All Requests" ? "All Recent Requests" : requestFilter === "Change Request" ? "Change Requests" : "Reporting / Data Issues"}
         subtitle="Search the requests included in the current dashboard filter."
       />
     </Box>
