@@ -7,17 +7,16 @@ export default function TopBar() {
   return (
     <AppBar
       position="static"
-      color="transparent"
       elevation={0}
       sx={{
         position: "relative",
         overflow: "hidden",
-        minHeight: 84,
-        borderBottom: "1px solid rgba(148,163,184,0.12)",
-        backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.95) 0%, rgba(5,10,20,0.82) 48%, rgba(7,13,24,0.58) 100%), url(${heroImage})`,
+        minHeight: 104,
+        borderBottom: "1px solid rgba(148,163,184,0.14)",
+        backgroundImage: `linear-gradient(90deg, rgba(4,9,18,0.96) 0%, rgba(4,9,18,0.86) 44%, rgba(7,13,24,0.54) 100%), url(${heroImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center 42%",
-        boxShadow: "0 10px 28px rgba(2,6,23,0.16)",
+        boxShadow: "0 12px 30px rgba(2,6,23,0.20)",
       }}
     >
       <Box
@@ -29,37 +28,53 @@ export default function TopBar() {
         }}
       />
 
-      <Toolbar sx={{ minHeight: "84px !important", px: { xs: 2, md: 3 }, position: "relative", zIndex: 1 }}>
-        <Box display="flex" alignItems="center" gap={{ xs: 1.5, md: 2 }}>
+      <Toolbar sx={{ minHeight: "104px !important", px: { xs: 2.25, md: 3.5 }, position: "relative", zIndex: 1 }}>
+        <Box display="flex" alignItems="center" gap={{ xs: 1.5, md: 2.1 }}>
           <Box
             sx={{
-              width: 42,
-              height: 42,
-              borderRadius: 2.25,
+              width: 46,
+              height: 46,
+              borderRadius: 2.5,
               display: "grid",
               placeItems: "center",
-              color: "#93C5FD",
-              bgcolor: "rgba(5,10,20,0.46)",
-              border: "1px solid rgba(96,165,250,0.26)",
+              color: "#A9D0FF",
+              bgcolor: "rgba(5,10,20,0.48)",
+              border: "1px solid rgba(96,165,250,0.28)",
               backdropFilter: "blur(8px)",
               flexShrink: 0,
             }}
           >
-            <DashboardOutlinedIcon sx={{ fontSize: 21 }} />
+            <DashboardOutlinedIcon sx={{ fontSize: 23 }} />
           </Box>
           <Box>
-            <Typography sx={{ fontSize: "1.08rem", lineHeight: 1.08, fontWeight: 850, letterSpacing: -0.25, textShadow: "0 4px 16px rgba(0,0,0,0.35)" }}>
-              DSNY ChangeHub
+            <Typography
+              sx={{
+                fontSize: { xs: "1.2rem", md: "1.38rem" },
+                lineHeight: 1.05,
+                fontWeight: 900,
+                letterSpacing: -0.35,
+                textShadow: "0 5px 18px rgba(0,0,0,0.40)",
+              }}
+            >
+              DSNY RequestHub
             </Typography>
-            <Typography variant="caption" sx={{ color: "rgba(226,232,240,0.68)", letterSpacing: 0.45 }}>
-              Change management workspace
+            <Typography variant="body2" sx={{ color: "rgba(226,232,240,0.78)", mt: 0.35, letterSpacing: 0.1 }}>
+              Change & Data Request Management
             </Typography>
           </Box>
         </Box>
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Avatar sx={{ width: 42, height: 42, bgcolor: "primary.main", fontWeight: 800, boxShadow: "0 8px 18px rgba(37,99,235,0.24)" }}>
+        <Avatar
+          sx={{
+            width: 44,
+            height: 44,
+            bgcolor: "primary.main",
+            fontWeight: 900,
+            boxShadow: "0 8px 20px rgba(37,99,235,0.26)",
+          }}
+        >
           J
         </Avatar>
       </Toolbar>
