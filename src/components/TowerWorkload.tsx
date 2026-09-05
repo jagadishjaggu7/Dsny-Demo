@@ -16,20 +16,20 @@ export default function TowerWorkload({ data }: TowerWorkloadProps) {
   const max = Math.max(...entries.map(([, value]) => value), 1);
 
   return (
-    <Box>
+    <Box sx={{ minWidth: 0 }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1.75}>
-        <Box>
-          <Typography variant="h6" fontWeight={800}>Tower workload</Typography>
+        <Box minWidth={0}>
+          <Typography variant="h6" fontWeight={800}>Requests by tower</Typography>
           <Typography variant="body2" color="text.secondary" mt={0.3}>
             Request volume across business towers
           </Typography>
         </Box>
-        <Typography variant="caption" color="text.secondary" fontWeight={800}>
+        <Typography variant="caption" color="text.secondary" fontWeight={800} sx={{ whiteSpace: "nowrap" }}>
           {total} requests
         </Typography>
       </Stack>
 
-      <Stack spacing={1.9}>
+      <Stack spacing={1.75}>
         {entries.map(([tower, count]) => {
           const meta = towerMeta[tower] ?? { label: tower, color: "#4F8CFF" };
           const percentage = total ? Math.round((count / total) * 100) : 0;
@@ -39,21 +39,22 @@ export default function TowerWorkload({ data }: TowerWorkloadProps) {
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "minmax(0, 1fr) auto",
-                  columnGap: 2,
-                  alignItems: "center",
-                  mb: 0.75,
+                  gridTemplateColumns: "minmax(0, 1fr) auto auto",
+                  columnGap: 1.25,
+                  alignItems: "baseline",
+                  mb: 0.7,
                 }}
               >
-                <Stack direction="row" spacing={1} alignItems="center" minWidth={0}>
+                <Stack direction="row" spacing={0.9} alignItems="center" minWidth={0}>
                   <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: meta.color, flexShrink: 0 }} />
                   <Box minWidth={0}>
-                    <Typography variant="body2" fontWeight={800} noWrap>{tower}</Typography>
-                    <Typography variant="caption" color="text.secondary" noWrap>{meta.label}</Typography>
+                    <Typography variant="body2" fontWeight={800} lineHeight={1.2} noWrap>{tower}</Typography>
+                    <Typography variant="caption" color="text.secondary" lineHeight={1.2} noWrap>{meta.label}</Typography>
                   </Box>
                 </Stack>
-                <Typography variant="body2" fontWeight={800} sx={{ whiteSpace: "nowrap" }}>
-                  {count} · {percentage}%
+                <Typography variant="body2" fontWeight={800} textAlign="right">{count}</Typography>
+                <Typography variant="caption" color="text.secondary" fontWeight={700} sx={{ minWidth: 36, textAlign: "right" }}>
+                  {percentage}%
                 </Typography>
               </Box>
 
