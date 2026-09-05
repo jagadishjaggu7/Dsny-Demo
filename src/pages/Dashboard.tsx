@@ -25,8 +25,6 @@ const panelSx = {
   boxShadow: "0 12px 30px rgba(2,6,23,0.14)",
 };
 
-const heroImage = "https://cdn.wallpapersafari.com/22/45/E62Jvs.jpg";
-
 export default function Dashboard() {
   const [requestFilter, setRequestFilter] = useState<DashboardRequestFilter>("Change Request");
 
@@ -61,35 +59,37 @@ export default function Dashboard() {
         sx={{
           position: "relative",
           overflow: "hidden",
-          minHeight: { xs: 172, md: 188 },
-          mb: 1.75,
-          px: { xs: 2.75, md: 4 },
-          py: { xs: 3, md: 3.5 },
+          minHeight: { xs: 112, md: 124 },
+          mb: 1.5,
+          px: { xs: 2.25, md: 3.25 },
+          py: { xs: 2, md: 2.35 },
           display: "flex",
           alignItems: "center",
-          borderRadius: 3.5,
-          border: "1px solid rgba(96,165,250,0.20)",
-          backgroundImage: `linear-gradient(90deg, rgba(5,10,20,0.96) 0%, rgba(5,10,20,0.84) 52%, rgba(7,13,24,0.48) 100%), url(${heroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center 42%",
-          boxShadow: "0 18px 44px rgba(2,6,23,0.22)",
+          borderRadius: 3,
+          border: "1px solid rgba(96,165,250,0.16)",
+          bgcolor: "rgba(17,24,39,0.72)",
+          background: "linear-gradient(135deg, rgba(30,48,80,0.42) 0%, rgba(17,24,39,0.82) 58%, rgba(11,18,32,0.94) 100%)",
+          boxShadow: "0 14px 34px rgba(2,6,23,0.18)",
           "&::after": {
             content: '""',
             position: "absolute",
-            inset: 0,
-            background: "radial-gradient(circle at 78% 45%, rgba(79,140,255,0.18), transparent 32%)",
+            top: 0,
+            bottom: 0,
+            right: "12%",
+            width: 180,
+            background: "radial-gradient(circle, rgba(79,140,255,0.16), transparent 68%)",
             pointerEvents: "none",
           },
         }}
       >
-        <Box sx={{ position: "relative", zIndex: 1, maxWidth: 900 }}>
-          <Stack direction="row" spacing={1.1} alignItems="center" mb={1}>
-            <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.10)" }} />
-            <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.45, textTransform: "uppercase" }}>
+        <Box sx={{ position: "relative", zIndex: 1 }}>
+          <Stack direction="row" spacing={1} alignItems="center" mb={0.65}>
+            <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: "#60A5FA", boxShadow: "0 0 0 5px rgba(96,165,250,0.09)" }} />
+            <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.3, textTransform: "uppercase" }}>
               Administration
             </Typography>
           </Stack>
-          <Typography component="h1" sx={{ fontSize: { xs: "2.25rem", md: "3.15rem" }, lineHeight: 0.98, fontWeight: 900, letterSpacing: -1.6, textShadow: "0 8px 28px rgba(0,0,0,0.4)" }}>
+          <Typography component="h1" sx={{ fontSize: { xs: "1.95rem", md: "2.65rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.2 }}>
             Change Request Overview
           </Typography>
         </Box>
@@ -99,10 +99,10 @@ export default function Dashboard() {
         sx={{
           mb: 2.5,
           px: { xs: 1.5, md: 1.9 },
-          py: 1.2,
+          py: 1.15,
           display: "flex",
           alignItems: "center",
-          gap: 1.1,
+          gap: 1.05,
           borderLeft: "3px solid #4F8CFF",
           borderRadius: 1.5,
           bgcolor: "rgba(79,140,255,0.055)",
