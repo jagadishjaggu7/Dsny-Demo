@@ -30,7 +30,7 @@ export default function MyRequests({ tickets = seedTickets, onTicketClick }: MyR
       </Box>
 
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mb: 2.25 }}>
-        {[['Total requests', myRequests.length], ['In progress', openCount], ['Completed', closedCount]].map(([label, value]) => (
+        {[["Total requests", myRequests.length], ["In progress", openCount], ["Completed", closedCount]].map(([label, value]) => (
           <Paper key={String(label)} elevation={0} sx={{ flex: 1, p: 1.7, borderRadius: 2.5, bgcolor: "rgba(17,24,39,0.78)", border: "1px solid rgba(148,163,184,0.12)" }}>
             <Typography variant="caption" color="text.secondary">{label}</Typography>
             <Typography variant="h5" fontWeight={900}>{value}</Typography>
@@ -50,6 +50,7 @@ export default function MyRequests({ tickets = seedTickets, onTicketClick }: MyR
                 <Typography fontWeight={800} mt={0.65} sx={{ lineHeight: 1.3 }}>{getTicketDisplayTitle(ticket)}</Typography>
                 <Stack direction="row" spacing={1} mt={0.95} flexWrap="wrap" useFlexGap>
                   <Chip size="small" label={ticket.tower} variant="outlined" />
+                  {ticket.deliveryCentre ? <Chip size="small" label={ticket.deliveryCentre} variant="outlined" /> : null}
                   <Chip size="small" label={`${ticket.priority} priority`} variant="outlined" />
                   {ticket.reportName ? <Chip size="small" label={ticket.reportName} variant="outlined" /> : null}
                   {ticket.reportingMonth ? <Chip size="small" label={ticket.reportingMonth} variant="outlined" /> : null}
