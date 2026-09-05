@@ -36,6 +36,7 @@ export default function Sidebar({ role, activePage, onNavigate }: SidebarProps) 
         ]
       : role === "viewer"
         ? [
+            { page: "dashboard" as const, label: "Dashboard", icon: <DashboardRounded /> },
             { page: "all-requests" as const, label: "All Requests", icon: <VisibilityOutlined /> },
           ]
         : [
