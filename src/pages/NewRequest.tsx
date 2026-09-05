@@ -57,32 +57,17 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
     <Box sx={{ maxWidth: 1080, mx: "auto", pb: 5 }}>
       <Box
         sx={{
-          position: "relative",
-          overflow: "hidden",
-          minHeight: { xs: 112, md: 124 },
           mb: 1.5,
-          px: { xs: 2.25, md: 3.25 },
-          py: { xs: 2, md: 2.35 },
+          p: { xs: 2, md: 2.5 },
           display: "flex",
           alignItems: "center",
           borderRadius: 3,
           border: "1px solid rgba(96,165,250,0.16)",
-          bgcolor: "rgba(17,24,39,0.72)",
           background: "linear-gradient(135deg, rgba(30,48,80,0.42) 0%, rgba(17,24,39,0.82) 58%, rgba(11,18,32,0.94) 100%)",
           boxShadow: "0 14px 34px rgba(2,6,23,0.18)",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            right: "10%",
-            top: 0,
-            bottom: 0,
-            width: 190,
-            background: "radial-gradient(circle, rgba(79,140,255,0.15), transparent 68%)",
-            pointerEvents: "none",
-          },
         }}
       >
-        <Stack direction="row" spacing={1.1} alignItems="center" sx={{ position: "relative", zIndex: 1 }}>
+        <Stack direction="row" spacing={1.1} alignItems="center">
           <Box sx={{ width: 40, height: 40, borderRadius: 2.25, display: "grid", placeItems: "center", bgcolor: "rgba(79,140,255,0.10)", border: "1px solid rgba(79,140,255,0.18)", color: "#93C5FD" }}>
             <BuildOutlinedIcon />
           </Box>
@@ -90,7 +75,7 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
             <Typography variant="caption" sx={{ color: "#BFDBFE", fontWeight: 900, letterSpacing: 1.3, textTransform: "uppercase" }}>
               Request Intake
             </Typography>
-            <Typography component="h1" sx={{ mt: 0.25, fontSize: { xs: "1.95rem", md: "2.65rem" }, lineHeight: 1, fontWeight: 900, letterSpacing: -1.2 }}>
+            <Typography component="h1" sx={{ mt: 0.25, fontSize: { xs: "1.82rem", md: "2.35rem" }, lineHeight: 1.02, fontWeight: 900, letterSpacing: -1.05 }}>
               Create a New Request
             </Typography>
           </Box>
@@ -129,16 +114,7 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
         {requestOptions.map((option) => {
           const selected = requestType === option.type;
           return (
-            <Card
-              key={option.type}
-              sx={{
-                flex: 1,
-                borderRadius: 3,
-                border: selected ? "1px solid rgba(79,140,255,0.65)" : "1px solid rgba(148,163,184,0.12)",
-                bgcolor: selected ? "rgba(30,48,80,0.65)" : "rgba(17,24,39,0.82)",
-                boxShadow: selected ? "0 12px 30px rgba(37,99,235,0.16)" : "none",
-              }}
-            >
+            <Card key={option.type} sx={{ flex: 1, borderRadius: 3, border: selected ? "1px solid rgba(79,140,255,0.65)" : "1px solid rgba(148,163,184,0.12)", bgcolor: selected ? "rgba(30,48,80,0.65)" : "rgba(17,24,39,0.82)", boxShadow: selected ? "0 12px 30px rgba(37,99,235,0.16)" : "none" }}>
               <CardActionArea onClick={() => setRequestType(option.type)} sx={{ height: "100%" }}>
                 <CardContent sx={{ p: 2.5 }}>
                   <Stack direction="row" alignItems="center" spacing={1.5}>
@@ -150,9 +126,7 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
                       {selected && <Chip label="Selected" size="small" color="primary" sx={{ mt: 0.45 }} />}
                     </Box>
                   </Stack>
-                  <Typography variant="body2" color="text.secondary" mt={1.5}>
-                    {option.description}
-                  </Typography>
+                  <Typography variant="body2" color="text.secondary" mt={1.5}>{option.description}</Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -204,7 +178,6 @@ export default function NewRequest({ onCancel }: NewRequestProps) {
           </Stack>
 
           <Divider />
-
           <Stack direction="row" justifyContent="flex-end" spacing={1.25}>
             <Button variant="text" onClick={onCancel}>Cancel</Button>
             <Button type="submit" variant="contained" startIcon={submitted ? <AddTaskOutlinedIcon /> : <SendOutlinedIcon />}>
