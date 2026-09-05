@@ -38,28 +38,31 @@ export default function RecentTable() {
     <Paper
       elevation={0}
       sx={{
-        mt: 3,
+        mt: 2.5,
         overflow: "hidden",
-        border: "1px solid",
-        borderColor: "divider",
+        border: "1px solid rgba(148,163,184,0.12)",
         borderRadius: 3,
+        bgcolor: "rgba(17,24,39,0.82)",
+        boxShadow: "0 14px 34px rgba(2,6,23,0.2)",
       }}
     >
       <Box
         sx={{
-          p: { xs: 2, sm: 2.5 },
+          px: { xs: 2, sm: 2.5 },
+          py: 2,
           display: "flex",
           gap: 2,
           alignItems: { xs: "stretch", sm: "center" },
           justifyContent: "space-between",
           flexDirection: { xs: "column", sm: "row" },
+          borderBottom: "1px solid rgba(148,163,184,0.10)",
         }}
       >
         <Box>
           <Typography variant="h6" fontWeight={800}>
             Recent Change Requests
           </Typography>
-          <Typography variant="body2" color="text.secondary" mt={0.5}>
+          <Typography variant="body2" color="text.secondary" mt={0.4}>
             Latest requests across PTP, RTR, and DFS.
           </Typography>
         </Box>
@@ -70,7 +73,13 @@ export default function RecentTable() {
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search CR number or title"
           aria-label="Search change requests"
-          sx={{ width: { xs: "100%", sm: 290 } }}
+          sx={{
+            width: { xs: "100%", sm: 285 },
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 2,
+              bgcolor: "rgba(15,23,42,0.7)",
+            },
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -81,17 +90,23 @@ export default function RecentTable() {
         />
       </Box>
 
-      <TableContainer>
-        <Table size="small" sx={{ minWidth: 760 }}>
+      <TableContainer sx={{ maxHeight: 430 }}>
+        <Table stickyHeader size="small" sx={{ minWidth: 780 }}>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 800 }}>CR Number</TableCell>
-              <TableCell sx={{ fontWeight: 800 }}>Title</TableCell>
-              <TableCell sx={{ fontWeight: 800 }}>Tower</TableCell>
-              <TableCell sx={{ fontWeight: 800 }}>Priority</TableCell>
-              <TableCell sx={{ fontWeight: 800 }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 800 }}>Assignee</TableCell>
-              <TableCell sx={{ fontWeight: 800 }}>ETA</TableCell>
+              {['CR Number', 'Title', 'Tower', 'Priority', 'Status', 'Assignee', 'ETA'].map((label) => (
+                <TableCell
+                  key={label}
+                  sx={{
+                    fontWeight: 800,
+                    bgcolor: "#162033",
+                    borderBottomColor: "rgba(148,163,184,0.14)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {label}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -102,13 +117,9 @@ export default function RecentTable() {
                 </TableCell>
                 <TableCell sx={{ minWidth: 250 }}>{ticket.title}</TableCell>
                 <TableCell>{ticket.tower}</TableCell>
-                <TableCell>
-                  <PriorityBadge priority={ticket.priority} />
-                </TableCell>
-                <TableCell>
-                  <StatusChip status={ticket.status} />
-                </TableCell>
-                <TableCell>{ticket.requester}</TableCell>
+                <TableCell><PriorityBadge priority={ticket.priority} /></TableCell>
+                <TableCell><StatusChip status={ticket.status} /></TableCell>
+                <TableCell sx={{ color: "text.secondary" }}>{ticket.requester}</TableCell>
                 <TableCell sx={{ whiteSpace: "nowrap" }}>{ticket.eta ?? "—"}</TableCell>
               </TableRow>
             ))}
