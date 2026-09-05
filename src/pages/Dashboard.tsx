@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
@@ -16,7 +16,7 @@ const workflowStatuses: TicketStatus[] = ["New", "Assigned", "DEV", "QA", "PRD",
 
 const panelSx = {
   height: "100%",
-  p: { xs: 2, md: 2.25 },
+  p: { xs: 2, md: 2.5 },
   borderRadius: 3,
   border: "1px solid rgba(148,163,184,0.10)",
   bgcolor: "#111827",
@@ -53,7 +53,7 @@ export default function Dashboard() {
           position: "relative",
           overflow: "hidden",
           minHeight: { xs: 146, md: 160 },
-          mb: 2.75,
+          mb: 3,
           px: { xs: 2.25, md: 3 },
           py: { xs: 2.25, md: 2.5 },
           display: "flex",
@@ -64,15 +64,6 @@ export default function Dashboard() {
           backgroundSize: "cover",
           backgroundPosition: "center 48%",
           boxShadow: "0 18px 46px rgba(2,6,23,0.22)",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(circle at 82% 28%, rgba(59,130,246,0.18), transparent 26%), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
-            backgroundSize: "auto, 32px 32px, 32px 32px",
-            pointerEvents: "none",
-          },
         }}
       >
         <Box sx={{ position: "relative", zIndex: 1, maxWidth: 760 }}>
@@ -120,7 +111,7 @@ export default function Dashboard() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={1.5} mt={2.25} alignItems="stretch">
+      <Grid container spacing={2} mt={2.5} alignItems="stretch">
         <Grid size={{ xs: 12, lg: 7 }}>
           <Box sx={panelSx}>
             <StatusSplit data={analytics.statusCounts} />
