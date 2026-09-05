@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
+import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
@@ -10,9 +10,10 @@ import RecentTable from "../components/RecentTable";
 import StatusSplit from "../components/StatusSplit";
 import TowerWorkload from "../components/TowerWorkload";
 import { tickets } from "../data/tickets";
-import type { TicketStatus } from "../types/ticket";
+import type { RequestType, TicketStatus } from "../types/ticket";
 
 const workflowStatuses: TicketStatus[] = ["New", "Assigned", "DEV", "QA", "PRD", "Closed"];
+type DashboardRequestFilter = RequestType | "All Requests";
 
 const panelSx = {
   height: "100%",
@@ -26,16 +27,23 @@ const panelSx = {
 const heroImage = "https://cdn.wallpapersafari.com/22/45/E62Jvs.jpg";
 
 export default function Dashboard() {
+  const [requestFilter, setRequestFilter] = useState<DashboardRequestFilter>("Change Request");
+
+  const filteredTickets = useMemo(() => {
+    if (requestFilter === "All Requests") return tickets;
+    return tickets.filter((ticket) => ticket.requestType === requestFilter);
+  }, [requestFilter]);
+
   const analytics = useMemo(() => {
     const statusCounts = workflowStatuses.reduce<Record<TicketStatus, number>>(
       (acc, status) => {
-        acc[status] = tickets.filter((ticket) => ticket.status === status).length;
+        acc[status] = filteredTickets.filter((ticket) => ticket.status === status).length;
         return acc;
       },
       { New: 0, Assigned: 0, DEV: 0, QA: 0, PRD: 0, Closed: 0 },
     );
 
-    const towerCounts = tickets.reduce<Record<string, number>>(
+    const towerCounts = filteredTickets.reduce<Record<string, number>>(
       (acc, ticket) => {
         acc[ticket.tower] = (acc[ticket.tower] ?? 0) + 1;
         return acc;
@@ -44,7 +52,7 @@ export default function Dashboard() {
     );
 
     return { statusCounts, towerCounts };
-  }, []);
+  }, [filteredTickets]);
 
   return (
     <Box sx={{ maxWidth: 1480, mx: "auto", pb: 5 }}>
@@ -98,20 +106,55 @@ export default function Dashboard() {
 
       <Grid container spacing={1.5}>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="Total Requests" value={String(tickets.length)} subtitle="Requests tracked" icon={<AssignmentOutlinedIcon fontSize="small" />} accent="primary" />
+          <KPICard title="Total Requests" value={String(tickets.length)} subtitle="All requests tracked" icon={<AssignmentOutlinedIcon fontSize="small" />} accent="primary" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="Development" value={String(analytics.statusCounts.DEV)} subtitle="Being implemented" icon={<CodeOutlinedIcon fontSize="small" />} accent="warning" />
+          <KPICard title="Development" value={String(analytics.statusCounts.DEV)} subtitle="Selected request type" icon={<CodeOutlinedIcon fontSize="small" />} accent="warning" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="QA Validation" value={String(analytics.statusCounts.QA)} subtitle="Awaiting validation" icon={<ScienceOutlinedIcon fontSize="small" />} accent="info" />
+          <KPICard title="QA Validation" value={String(analytics.statusCounts.QA)} subtitle="Selected request type" icon={<ScienceOutlinedIcon fontSize="small" />} accent="info" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <KPICard title="Closed" value={String(analytics.statusCounts.Closed)} subtitle="Completed requests" icon={<CheckCircleIcon fontSize="small" />} accent="success" />
+          <KPICard title="Closed" value={String(analytics.statusCounts.Closed)} subtitle="Selected request type" icon={<CheckCircleIcon fontSize="small" />} accent="success" />
         </Grid>
       </Grid>
 
-      <Grid container spacing={1.5} sx={{ mt: { xs: 2, md: 2.25 } }} alignItems="stretch">
+      <Box
+        sx={{
+          mt: { xs: 2, md: 2.25 },
+          mb: 1.5,
+          px: { xs: 0, md: 0.25 },
+          display: "flex",
+          alignItems: { xs: "stretch", md: "center" },
+          justifyContent: "space-between",
+          gap: 2,
+          flexDirection: { xs: "column", md: "row" },
+        }}
+      >
+        <Box>
+          <Typography variant="subtitle1" fontWeight={800}>
+            Analytics view
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Filter both panels by request type.
+          </Typography>
+        </Box>
+        <FormControl size="small" sx={{ minWidth: { xs: "100%", md: 260 } }}>
+          <InputLabel id="request-filter-label">Request type</InputLabel>
+          <Select
+            labelId="request-filter-label"
+            label="Request type"
+            value={requestFilter}
+            onChange={(event) => setRequestFilter(event.target.value as DashboardRequestFilter)}
+          >
+            <MenuItem value="Change Request">Change Requests</MenuItem>
+            <MenuItem value="Reporting / Data Issue">Reporting / Data Issues</MenuItem>
+            <MenuItem value="All Requests">All Requests</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Grid container spacing={1.5} alignItems="stretch">
         <Grid size={{ xs: 12, lg: 7 }}>
           <Box sx={panelSx}>
             <StatusSplit data={analytics.statusCounts} />
