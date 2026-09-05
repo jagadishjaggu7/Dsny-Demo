@@ -10,8 +10,8 @@ interface TopBarProps {
 }
 
 export default function TopBar({ role, onRoleChange }: TopBarProps) {
-  const roleLabel = role === "admin" ? "Admin" : role === "developer" ? "Developer" : "Requester";
-  const avatarLabel = role === "admin" ? "A" : role === "developer" ? "D" : "R";
+  const roleLabel = role === "admin" ? "Admin" : role === "developer" ? "Developer" : role === "viewer" ? "Read Only" : "Requester";
+  const avatarLabel = role === "admin" ? "A" : role === "developer" ? "D" : role === "viewer" ? "V" : "R";
 
   return (
     <AppBar position="static" elevation={0} sx={{ position: "relative", overflow: "hidden", minHeight: 104, borderBottom: "1px solid rgba(148,163,184,0.14)", backgroundImage: `linear-gradient(90deg, rgba(4,9,18,0.96) 0%, rgba(4,9,18,0.86) 44%, rgba(7,13,24,0.54) 100%), url(${heroImage})`, backgroundSize: "cover", backgroundPosition: "center 42%", boxShadow: "0 12px 30px rgba(2,6,23,0.20)" }}>
@@ -31,6 +31,7 @@ export default function TopBar({ role, onRoleChange }: TopBarProps) {
           <MenuItem value="admin">Admin</MenuItem>
           <MenuItem value="developer">Developer</MenuItem>
           <MenuItem value="requester">Requester</MenuItem>
+          <MenuItem value="viewer">Read Only</MenuItem>
         </Select>
         <Avatar sx={{ width: 44, height: 44, bgcolor: "primary.main", fontWeight: 900, boxShadow: "0 8px 20px rgba(37,99,235,0.26)" }} aria-label={`${roleLabel} user`}>{avatarLabel}</Avatar>
       </Toolbar>
