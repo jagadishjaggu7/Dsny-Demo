@@ -34,19 +34,13 @@ export default function StatusSplit({ data }: StatusSplitProps) {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "210px minmax(0,1fr)" },
+          gridTemplateColumns: { xs: "1fr", md: "220px minmax(0, 390px)" },
+          justifyContent: { xs: "stretch", md: "start" },
           gap: { xs: 1.5, md: 3 },
           alignItems: "center",
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            height: 218,
-            position: "relative",
-            minWidth: 0,
-          }}
-        >
+        <Box sx={{ height: 218, position: "relative", minWidth: 0 }}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -97,14 +91,14 @@ export default function StatusSplit({ data }: StatusSplitProps) {
           </Box>
         </Box>
 
-        <Box sx={{ minWidth: 0, width: "100%" }}>
+        <Box sx={{ minWidth: 0, width: "100%", maxWidth: 390 }}>
           <Box
             sx={{
               display: "grid",
               gridTemplateColumns: "minmax(0,1fr) 32px 52px",
               columnGap: 1.5,
               alignItems: "center",
-              px: 1.25,
+              px: 1,
               mb: 0.45,
             }}
           >
@@ -133,7 +127,7 @@ export default function StatusSplit({ data }: StatusSplitProps) {
                     columnGap: 1.5,
                     alignItems: "center",
                     minHeight: 34,
-                    px: 1.25,
+                    px: 1,
                     borderRadius: 1.5,
                     "&:hover": { bgcolor: "rgba(255,255,255,0.035)" },
                   }}
