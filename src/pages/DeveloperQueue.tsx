@@ -4,6 +4,7 @@ import ScheduleOutlinedIcon from "@mui/icons-material/ScheduleOutlined";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import type { Ticket } from "../types/ticket";
 import StatusChip from "../components/StatusChip";
+import { getRequestTypeLabel, getTicketDisplayTitle } from "../utils/ticketDisplay";
 
 interface DeveloperQueueProps {
   tickets: Ticket[];
@@ -17,23 +18,14 @@ export default function DeveloperQueue({ tickets, developerId, onTicketClick }: 
   const completed = assigned.filter((ticket) => ticket.status === "Closed");
 
   const TicketCard = ({ ticket }: { ticket: Ticket }) => (
-    <Paper
-      elevation={0}
-      onClick={() => onTicketClick(ticket)}
-      sx={{
-        p: { xs: 2, md: 2.2 }, borderRadius: 3, bgcolor: "rgba(17,24,39,0.82)",
-        border: "1px solid rgba(148,163,184,0.12)", cursor: "pointer",
-        transition: "border-color .2s ease, transform .2s ease",
-        "&:hover": { borderColor: "rgba(96,165,250,0.3)", transform: "translateY(-1px)" },
-      }}
-    >
+    <Paper key={ticket.id} elevation={0} onClick={() => onTicketClick(ticket)} sx={{ p: { xs: 2, md: 2.2 }, borderRadius: 3, bgcolor: "rgba(17,24,39,0.82)", border: "1px solid rgba(148,163,184,0.12)", cursor: "pointer", transition: "border-color .2s ease, transform .2s ease", "&:hover": { borderColor: "rgba(96,165,250,0.3)", transform: "translateY(-1px)" } }}>
       <Stack direction={{ xs: "column", md: "row" }} spacing={2} alignItems={{ xs: "flex-start", md: "center" }}>
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
             <Typography variant="caption" sx={{ color: "#93C5FD", fontWeight: 800 }}>{ticket.id}</Typography>
-            <Chip size="small" label={ticket.requestType === "Change Request" ? "Change" : "Data issue"} variant="outlined" />
+            <Chip size="small" label={getRequestTypeLabel(ticket.requestType)} variant="outlined" />
           </Stack>
-          <Typography fontWeight={800} mt={0.65}>{ticket.title}</Typography>
+          <Typography fontWeight={800} mt={0.65}>{getTicketDisplayTitle(ticket)}</Typography>
           <Stack direction="row" spacing={1} mt={0.95} flexWrap="wrap" useFlexGap>
             <Chip size="small" label={ticket.tower} variant="outlined" />
             <Chip size="small" label={`${ticket.priority} priority`} variant="outlined" />
@@ -44,7 +36,7 @@ export default function DeveloperQueue({ tickets, developerId, onTicketClick }: 
           <StatusChip status={ticket.status} />
           <Stack direction="row" spacing={0.6} alignItems="center" color="text.secondary">
             <ScheduleOutlinedIcon sx={{ fontSize: 16 }} />
-            <Typography variant="caption">{ticket.status === "Closed" ? "Completed" : `ETA ${ticket.eta ?? "TBD"}`}</Typography>
+            <Typography variant="caption">{ticket.status === "Closed" ? "Completed" : ticket.eta ? `ETA ${ticket.eta}` : "ETA not yet updated"}</Typography>
           </Stack>
         </Stack>
         <ArrowForwardRoundedIcon sx={{ color: "text.secondary", display: { xs: "none", md: "block" } }} />
@@ -60,13 +52,9 @@ export default function DeveloperQueue({ tickets, developerId, onTicketClick }: 
           <Box><Typography component="h1" sx={{ fontSize: { xs: "1.9rem", md: "2.3rem" }, fontWeight: 900, lineHeight: 1.05, letterSpacing: -0.8 }}>My Queue</Typography><Typography color="text.secondary" sx={{ mt: 0.45 }}>Requests assigned to you, including completed work.</Typography></Box>
         </Stack>
       </Box>
-
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mb: 2.5 }}>
-        <Paper elevation={0} sx={{ flex: 1, p: 1.6, borderRadius: 2.5, bgcolor: "rgba(17,24,39,0.78)", border: "1px solid rgba(148,163,184,0.12)" }}><Typography variant="caption" color="text.secondary">Active assignments</Typography><Typography variant="h5" fontWeight={900}>{active.length}</Typography></Paper>
-        <Paper elevation={0} sx={{ flex: 1, p: 1.6, borderRadius: 2.5, bgcolor: "rgba(17,24,39,0.78)", border: "1px solid rgba(148,163,184,0.12)" }}><Typography variant="caption" color="text.secondary">Completed</Typography><Typography variant="h5" fontWeight={900}>{completed.length}</Typography></Paper>
-        <Paper elevation={0} sx={{ flex: 1, p: 1.6, borderRadius: 2.5, bgcolor: "rgba(17,24,39,0.78)", border: "1px solid rgba(148,163,184,0.12)" }}><Typography variant="caption" color="text.secondary">Total assigned</Typography><Typography variant="h5" fontWeight={900}>{assigned.length}</Typography></Paper>
+        {[['Active assignments', active.length], ['Completed', completed.length], ['Total assigned', assigned.length]].map(([label, value]) => <Paper key={String(label)} elevation={0} sx={{ flex: 1, p: 1.6, borderRadius: 2.5, bgcolor: "rgba(17,24,39,0.78)", border: "1px solid rgba(148,163,184,0.12)" }}><Typography variant="caption" color="text.secondary">{label}</Typography><Typography variant="h5" fontWeight={900}>{value}</Typography></Paper>)}
       </Stack>
-
       <Stack spacing={2.5}>
         <Box><Typography variant="subtitle1" fontWeight={800} mb={1}>Active work</Typography><Stack spacing={1.25}>{active.map((ticket) => <TicketCard key={ticket.id} ticket={ticket} />)}{active.length === 0 && <Paper elevation={0} sx={{ p: 3, borderRadius: 3, bgcolor: "rgba(17,24,39,0.82)", border: "1px dashed rgba(148,163,184,0.2)" }}><Typography color="text.secondary">No active assignments.</Typography></Paper>}</Stack></Box>
         <Box><Typography variant="subtitle1" fontWeight={800} mb={1}>Completed work</Typography><Stack spacing={1.25}>{completed.map((ticket) => <TicketCard key={ticket.id} ticket={ticket} />)}{completed.length === 0 && <Paper elevation={0} sx={{ p: 3, borderRadius: 3, bgcolor: "rgba(17,24,39,0.82)", border: "1px dashed rgba(148,163,184,0.2)" }}><Typography color="text.secondary">No completed assignments yet.</Typography></Paper>}</Stack></Box>
